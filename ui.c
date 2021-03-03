@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <locale.h>
+#include <stdbool.h>
 
 #include "history.h"
 #include "logger.h"
@@ -9,6 +10,10 @@
 static int readline_init(void);
 static char prompt_str[80] = "--[enter a command]--> ";
 
+static bool scripting = false;
+// static char *line = NULL;
+// static size_t line_sz = 0;
+
 void init_ui(void)
 {
     LOGP("Initializing UI...\n");
@@ -16,6 +21,13 @@ void init_ui(void)
     char *locale = setlocale(LC_ALL, "en_US.UTF-8");
     LOG("Setting locale: %s\n",
             (locale != NULL) ? locale : "could not set locale!");
+
+    if (isatty(STDIN_FILENO)) {
+        LOGP("stdin is a TTY; entering interactive mode\n");
+    } else {
+        LOGP("data piped in on stdin; entering script mode\n");
+        scripting = true;
+    }
 
     rl_startup_hook = readline_init;
 }
@@ -26,7 +38,20 @@ char *prompt_line(void) {
 
 char *read_command(void)
 {
-    return readline(prompt_line());
+    if (scripting == true) {
+        //read another way
+        char *line = NULL;
+        size_t line_sz = 0;
+        size_t read_sz = getline(&line, &line_sz, stdin);
+        if (read_sz == -1) {
+            perror("getline");
+            return NULL;
+        }
+        line[read_sz - 1] = '\0';
+        return line;
+    } else {
+        return readline(prompt_line());
+    }
 }
 
 int readline_init(void)
