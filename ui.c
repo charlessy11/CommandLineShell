@@ -16,6 +16,8 @@ static bool scripting = false;
 // static char *line = NULL;
 // static size_t line_sz = 0;
 
+static int command_num = 1; //set starting command number to 1
+
 void init_ui(void)
 {
     LOGP("Initializing UI...\n");
@@ -40,8 +42,7 @@ char *prompt_line(void) {
     char *username = calloc(100, sizeof(char));
     char *hostname = calloc(100, sizeof(char));
     char *cwd = calloc(100, sizeof(char));
-    /* set starting command number to 1 */
-    int command_num = 1;
+
     /* retrieve info */
     gethostname(hostname, 100);
     getlogin_r(username, 100);
@@ -56,7 +57,7 @@ char *prompt_line(void) {
 
     char *prompt_str = calloc(80, sizeof(char));
     sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "VALID", command_num++, username, hostname, cwd, '$');
-    //if invalid command
+    //HELP!!! if invalid command
 
 
     // fflush(stdout);

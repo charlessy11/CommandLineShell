@@ -20,6 +20,7 @@
 
 void sigint_handler(int signo) {
     printf("\n");
+    //HELP!!! print the prompt only if no command is currently executing
 }
 
 int main(void)
