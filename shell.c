@@ -33,6 +33,10 @@ int main(void)
         char *curr_tok;
         /* Tokenize. Note that ' \t\n\r' will all be removed. */
         while ((curr_tok = next_token(&next_tok, " \t\n\r")) != NULL) {
+            //checks if user entered "#"
+            if (*curr_tok == '#') {
+                break;
+            }
             args[tokens++] = curr_tok;
         }   
         args[tokens] = (char *) NULL;
@@ -44,10 +48,6 @@ int main(void)
         if (strcmp(args[0], "exit") == 0) {
             return 0;
         }
-        // //checks if user entered "#"
-        // if (strcmp(args[0], "#") == 0) {
-        //     signal(SIGINT, SIG_IGN);
-        // }
 
         pid_t child = fork();
         if (child == -1) {

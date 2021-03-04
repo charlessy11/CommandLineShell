@@ -2,15 +2,17 @@
 #include <readline/readline.h>
 #include <locale.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "history.h"
 #include "logger.h"
 #include "ui.h"
 
 static int readline_init(void);
-static char prompt_str[80] = "--[enter a command]--> ";
 
 static bool scripting = false;
+// static char prompt_str[80] = "--[enter a command]--> ";
 // static char *line = NULL;
 // static size_t line_sz = 0;
 
@@ -33,6 +35,31 @@ void init_ui(void)
 }
 
 char *prompt_line(void) {
+    /* create memory for info to be displayed in shell prompt */
+    char *home_dir = calloc(100, sizeof(char));
+    char *username = calloc(100, sizeof(char));
+    char *hostname = calloc(100, sizeof(char));
+    char *cwd = calloc(100, sizeof(char));
+    /* set starting command number to 1 */
+    int command_num = 1;
+    /* retrieve info */
+    gethostname(hostname, 100);
+    getlogin_r(username, 100);
+    getcwd(cwd, 100);
+
+    sprintf(home_dir, "/home/%s", username);
+    
+    int len = strlen(home_dir);
+    if (strncmp(cwd, home_dir, len) == 0) {
+        sprintf(cwd, "~%s", cwd+len);
+    }
+
+    char *prompt_str = calloc(80, sizeof(char));
+    sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "VALID", command_num++, username, hostname, cwd, '$');
+    //if invalid command
+
+
+    // fflush(stdout);
     return prompt_str;
 }
 
