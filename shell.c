@@ -8,17 +8,28 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <limits.h>
 
 #include "history.h"
 #include "logger.h"
 #include "ui.h"
 #include "util.h"
 
+
+void sigint_handler(int signo) {
+    printf("\n");
+}
+
 int main(void)
 {
     init_ui();
 
     char *command;
+    /* Set up our signal handler. SIGINT can be sent via Ctrl+C */
+    signal(SIGINT, sigint_handler); 
+
     while (true) {
         command = read_command();
         if (command == NULL) {
@@ -48,6 +59,13 @@ int main(void)
         if (strcmp(args[0], "exit") == 0) {
             return 0;
         }
+        if (strcmp(args[0], "cd") == 0 && args[1] == NULL) {
+            args[1] = getenv("HOME");
+        }
+        if (chdir(args[1]) != 0) {
+            perror("No directory");
+        }
+
 
         pid_t child = fork();
         if (child == -1) {
