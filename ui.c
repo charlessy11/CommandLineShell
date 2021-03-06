@@ -23,6 +23,12 @@ static bool scripting = false;
 static int command_num = 1; //set starting command number to 1
 
 // static int status = 0;
+int counter = 0;
+
+int getCounter()
+{
+    return counter;
+}
 
 void init_ui(void)
 {

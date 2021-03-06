@@ -16,9 +16,12 @@
 #include "logger.h"
 #include "ui.h"
 #include "util.h"
+#include "builtins.h"
 
 
 void sigint_handler(int signo) {
+    signal(signo, SIG_IGN);
+    fflush(stdout);
     printf("\n");
     //HELP!!! print the prompt only if no command is currently executing
 }
@@ -33,6 +36,11 @@ int main(void)
 
     while (true) {
         command = read_command();
+
+
+        // char* command_copy;
+
+
         if (command == NULL) {
             break;
         }
@@ -66,8 +74,11 @@ int main(void)
         if (chdir(args[1]) != 0) {
             perror("No directory");
         }
-
-
+        // int status = handle_builtins(&args);
+        // if (status == 0) {
+        //     continue;
+        // }
+        
         pid_t child = fork();
         if (child == -1) {
             perror("fork");
