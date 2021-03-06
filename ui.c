@@ -4,6 +4,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <limits.h>
 
 #include "history.h"
 #include "logger.h"
@@ -17,6 +21,8 @@ static bool scripting = false;
 // static size_t line_sz = 0;
 
 static int command_num = 1; //set starting command number to 1
+
+// static int status = 0;
 
 void init_ui(void)
 {
@@ -38,30 +44,44 @@ void init_ui(void)
 
 char *prompt_line(void) {
     /* create memory for info to be displayed in shell prompt */
-    char *home_dir = calloc(100, sizeof(char));
     char *username = calloc(100, sizeof(char));
     char *hostname = calloc(100, sizeof(char));
-    char *cwd = calloc(100, sizeof(char));
+    char cwd[PATH_MAX];
+    char *ptr = cwd;
 
     /* retrieve info */
     gethostname(hostname, 100);
     getlogin_r(username, 100);
     getcwd(cwd, 100);
+    struct passwd *pws;
+    pws = getpwuid(getuid());
 
-    sprintf(home_dir, "/home/%s", username);
     
-    int len = strlen(home_dir);
-    if (strncmp(cwd, home_dir, len) == 0) {
-        sprintf(cwd, "~%s", cwd+len);
+    int len = strlen(pws->pw_dir);
+    if (strncmp(cwd, pws->pw_dir, len) == 0) {
+        LOG("Length = %d", len);
+        LOG("CWD = %s", cwd);
+        *(cwd+len) = '~';
+        *(cwd+len+1) = '/';
+        ptr = (cwd+len);
+        LOG("PTR = %s", ptr);
     }
 
     char *prompt_str = calloc(80, sizeof(char));
-    sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "VALID", command_num++, username, hostname, cwd, '$');
+
+    // if (status == 0) {
+        sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "VALID", command_num++, username, hostname, ptr, '$');
+    // }
+    // else if (status == -1) {
+    //     sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "INVALID", command_num++, username, hostname, ptr, '$');
+    // }
     //HELP!!! if invalid command
 
-
-    // fflush(stdout);
     return prompt_str;
+
+    free(username);
+    free(hostname);
+    free(prompt_str);
 }
 
 char *read_command(void)
