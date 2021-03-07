@@ -1,47 +1,108 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "history.h"
+#include "ui.h"
+
+int cmd_count = 0;
+int overflow_count = 0;
+int max_sz = 0;
+
+/* history entry */
+struct hist_entry
+{
+    int cmd_num;
+    char cmd[100];
+};
+
+/* list of history entries */
+struct hist_entry *hist_list = {0};
 
 void hist_init(unsigned int limit)
 {
-    // TODO: set up history data structures, with 'limit' being the maximum
-    // number of entries maintained.
-    //use a circular array with size 'limit'
+    hist_list = malloc(limit * sizeof(struct hist_entry));
+    max_sz = limit;
 }
 
 void hist_destroy(void)
 {
-
+    free(hist_list);
 }
 
 void hist_add(const char *cmd)
 {
-
+    if (cmd_count >= max_sz) {
+        overflow_count++;
+        cmd_count = 0;
+    }
+    strcpy(hist_list[cmd_count].cmd, cmd);
+    hist_list[cmd_count].cmd_num = get_count();
+    cmd_count++;
 }
 
 void hist_print(void)
 {
-    //use printf()
-    //fflush(stdout);
+    int amount = overflow_count * max_sz;
+    int i;
+    if (amount > 0) {
+        for (i = cmd_count; i < max_sz; i++) {
+            printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].cmd);
+        }
+    }
+    for (i = 0; i < cmd_count; i++) {
+        printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].cmd);
+    }
+    fflush(stdout);
 }
 
-const char *hist_search_prefix(char *prefix)
+char *hist_search_prefix(char *prefix)
 {
-    // TODO: Retrieves the most recent command starting with 'prefix', or NULL
-    // if no match found.
+    int len = strlen(prefix);
+    int i;
+    for (i = cmd_count - 1; i >= 0; i--) {
+        if (strncmp(prefix, hist_list[i].cmd, len) == 0) {
+            return hist_list[i].cmd;
+        }
+    }
+    if (overflow_count > 0) {
+        for (i = max_sz - 1; i >= cmd_count; i--) {
+            if (strncmp(prefix, hist_list[i].cmd, len) == 0) {
+                return hist_list[i].cmd;
+            }
+        }
+    }
+
     return NULL;
 }
 
-const char *hist_search_cnum(int command_number)
+char *hist_search_cnum(int command_number)
 {
-    // TODO: Retrieves a particular command number. Return NULL if no match
-    // found.
+    if (command_number > (overflow_count * max_sz) + cmd_count) {
+        return NULL;
+    }
+    int i;
+    for (i = 0; i < max_sz; i++) {
+        if (command_number - 1 == hist_list[i].cmd_num) {
+            return hist_list[i].cmd;
+        }
+    }
+
+    int amount = overflow_count * max_sz;
+    if (command_number - amount - 1 < 0) {
+        return NULL;
+    }
+    if (command_number > max_sz) {
+        return (hist_list[command_number - amount - 1].cmd);
+    } else {
+        return (hist_list[command_number - 1].cmd);
+    }
+
     return NULL;
 }
 
-unsigned int hist_last_cnum(void)
+int hist_last_cnum(void)
 {
-    // TODO: Retrieve the most recent command number.
-    return 0;
+    return get_count();
 }
