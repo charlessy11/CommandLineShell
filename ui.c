@@ -12,22 +12,36 @@
 #include "history.h"
 #include "logger.h"
 #include "ui.h"
+#include "util.h"
+
 
 static int readline_init(void);
+// static char prompt_str[80] = "--[enter a command]--> ";
 
 static bool scripting = false;
-// static char prompt_str[80] = "--[enter a command]--> ";
-// static char *line = NULL;
-// static size_t line_sz = 0;
+
+static char *line = NULL;
+static size_t line_sz = 0;
 
 static int command_num = 1; //set starting command number to 1
 
-// static int status = 0;
 int counter = 0;
 
-int getCounter()
+static int result = 0;
+
+int get_count()
 {
     return counter;
+}
+
+void sum_count()
+{
+    counter++;
+}
+
+void set_result(int cmd_status)
+{
+    result = cmd_status;
 }
 
 void init_ui(void)
@@ -40,22 +54,27 @@ void init_ui(void)
 
     if (isatty(STDIN_FILENO)) {
         LOGP("stdin is a TTY; entering interactive mode\n");
+        scripting = false;
     } else {
         LOGP("data piped in on stdin; entering script mode\n");
         scripting = true;
     }
 
+    line = malloc(sizeof(char) * 1024);
+    line_sz = 1024;
+
     rl_startup_hook = readline_init;
 }
 
-char *prompt_line(void) {
-    /* create memory for info to be displayed in shell prompt */
+char *prompt_line(void)
+{
+    //create memory for info to be displayed in shell prompt
     char *username = calloc(100, sizeof(char));
     char *hostname = calloc(100, sizeof(char));
     char cwd[PATH_MAX];
     char *ptr = cwd;
 
-    /* retrieve info */
+    //retrieve info
     gethostname(hostname, 100);
     getlogin_r(username, 100);
     getcwd(cwd, 100);
@@ -75,12 +94,13 @@ char *prompt_line(void) {
 
     char *prompt_str = calloc(80, sizeof(char));
 
-    // if (status == 0) {
+
+    if (result == 0) {
         sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "VALID", command_num++, username, hostname, ptr, '$');
-    // }
-    // else if (status == -1) {
-    //     sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "INVALID", command_num++, username, hostname, ptr, '$');
-    // }
+    }
+    else {
+        sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "INVALID", command_num++, username, hostname, ptr, '$');
+    }
     //HELP!!! if invalid command
 
     return prompt_str;
@@ -92,13 +112,12 @@ char *prompt_line(void) {
 
 char *read_command(void)
 {
-    if (scripting == true) {
+     if (scripting == true) {
         //read another way
-        char *line = NULL;
-        size_t line_sz = 0;
         size_t read_sz = getline(&line, &line_sz, stdin);
         if (read_sz == -1) {
             perror("getline");
+            free(line);
             return NULL;
         }
         line[read_sz - 1] = '\0';
@@ -120,8 +139,11 @@ int readline_init(void)
 
 int key_up(int count, int key)
 {
+    char *curr_cmd = strdup(rl_line_buffer);
     /* Modify the command entry text: */
-    rl_replace_line("User pressed 'up' key", 1);
+    char temp[4096];
+    sprintf(temp, "%s. Search: %s", "User pressed 'up' key", curr_cmd);
+    rl_replace_line(temp, 1);
 
     /* Move the cursor to the end of the line: */
     rl_point = rl_end;
@@ -133,8 +155,11 @@ int key_up(int count, int key)
 
 int key_down(int count, int key)
 {
+    char *curr_cmd = strdup(rl_line_buffer);
     /* Modify the command entry text: */
-    rl_replace_line("User pressed 'down' key", 1);
+    char temp[4096];
+    sprintf(temp, "%s. Search: %s", "User pressed 'down' key", curr_cmd);
+    rl_replace_line(temp, 1);
 
     /* Move the cursor to the end of the line: */
     rl_point = rl_end;
@@ -144,10 +169,12 @@ int key_down(int count, int key)
     return 0;
 }
 
+/**
+ * Tell readline that if we don't find a suitable completion, it should fall
+ * back on its built-in filename completion. 
+ */
 char **command_completion(const char *text, int start, int end)
 {
-    /* Tell readline that if we don't find a suitable completion, it should fall
-     * back on its built-in filename completion. */
     rl_attempted_completion_over = 0;
 
     return rl_completion_matches(text, command_generator);
