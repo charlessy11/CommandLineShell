@@ -1,11 +1,3 @@
-/**
- * Demonstrates string tokenization in C using the strspn(3) and strcspn(3)
- * functions. Unlike strtok(3), this implementation is thread safe. The code
- * is based on the following newsgroup post:
- *
- * https://groups.google.com/forum/message/raw?msg=comp.lang.c/ff0xFqRPH_Y/Cen0mgciXn8J
- */
-
 #include "util.h"
 
 #include <string.h>
@@ -61,4 +53,21 @@ char *next_token(char **str_ptr, const char *delim)
     }
 
     return current_ptr;
+}
+
+// Function to implement substring function in C
+char* substr(char *dest, const char *src, int start, int end)
+{
+    // extracts n characters from source string starting from beg index
+    // and copy them into the destination string
+    while (end != 0) {
+        *dest = *(src + start);
+        ++dest;
+        ++src;
+        --end;
+    }
+    // null terminate destination string
+    *dest = '\0';
+    // return the destination string
+    return dest;
 }
