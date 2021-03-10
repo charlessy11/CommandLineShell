@@ -16,20 +16,43 @@ struct command_line {
 //call execute pipeline
 //returns status of execute_pipeline
 
-int set_up_cmd_line(char tokens, int len) 
-{
-    // int temp = 0;
-    // while (temp != len) {
-    //     if (tokens == '|') {
+// int set_up_cmd_line(char tokens, int len) 
+// {
+//     // int temp = 0;
+//     // while (temp != len) {
+//     //     if (tokens == '|') {
             
-    //     }
-    // }
-    int i;
-    for (i = 0; i < len; i++) {
-        if ()
-    }
-}
+//     //     }
+//     // }
+//     int i;
+//     for (i = 0; i < len; i++) {
+//         if ()
+//     }
+// }
 
+void prepareCmds(char **args, int count, struct command_line *cmds) {
+    int in = 0;
+    cmds[in].tokens = &args[0];
+    cmds[in].stdout_pipe = true;
+    cmds[in].stdout_file = NULL;
+    in++;
+
+    for(int i = 0; i < count; i++) {
+        if(strcmp(args[i], "|") == 0){
+            args[i] = 0;
+            cmds[in].tokens = &args[i + 1];
+            cmds[in].stdout_pipe = true;
+            cmds[in].stdout_file = NULL;
+            in++;
+        } else if(strcmp(args[i], ">") == 0){
+            args[i] = 0;
+            cmds[in - 1].stdout_file = args[i + 1];
+        }
+
+    }
+
+    cmds[in - 1].stdout_pipe = false;
+}
 
 void execute_pipeline(struct command_line *cmds)
 {

@@ -14,7 +14,7 @@ int max_sz = 0;
 struct hist_entry
 {
     int cmd_num;
-    char cmd[100];
+    char command[100];
 };
 
 /* list of history entries */
@@ -37,7 +37,7 @@ void hist_add(const char *cmd)
         overflow_count++;
         cmd_count = 0;
     }
-    strcpy(hist_list[cmd_count].cmd, cmd);
+    strcpy(hist_list[cmd_count].command, cmd);
     hist_list[cmd_count].cmd_num = get_count();
     cmd_count++;
 }
@@ -48,11 +48,11 @@ void hist_print(void)
     int i;
     if (amount > 0) {
         for (i = cmd_count; i < max_sz; i++) {
-            printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].cmd);
+            printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].command);
         }
     }
     for (i = 0; i < cmd_count; i++) {
-        printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].cmd);
+        printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].command);
     }
     fflush(stdout);
 }
@@ -62,14 +62,14 @@ char *hist_search_prefix(char *prefix)
     int len = strlen(prefix);
     int i;
     for (i = cmd_count - 1; i >= 0; i--) {
-        if (strncmp(prefix, hist_list[i].cmd, len) == 0) {
-            return hist_list[i].cmd;
+        if (strncmp(prefix, hist_list[i].command, len) == 0) {
+            return hist_list[i].command;
         }
     }
     if (overflow_count > 0) {
         for (i = max_sz - 1; i >= cmd_count; i--) {
-            if (strncmp(prefix, hist_list[i].cmd, len) == 0) {
-                return hist_list[i].cmd;
+            if (strncmp(prefix, hist_list[i].command, len) == 0) {
+                return hist_list[i].command;
             }
         }
     }
@@ -85,7 +85,7 @@ char *hist_search_cnum(int command_number)
     int i;
     for (i = 0; i < max_sz; i++) {
         if (command_number - 1 == hist_list[i].cmd_num) {
-            return hist_list[i].cmd;
+            return hist_list[i].command;
         }
     }
 
@@ -94,9 +94,9 @@ char *hist_search_cnum(int command_number)
         return NULL;
     }
     if (command_number > max_sz) {
-        return (hist_list[command_number - amount - 1].cmd);
+        return (hist_list[command_number - amount - 1].command);
     } else {
-        return (hist_list[command_number - 1].cmd);
+        return (hist_list[command_number - 1].command);
     }
 
     return NULL;
