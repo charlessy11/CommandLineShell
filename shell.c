@@ -42,10 +42,11 @@ struct built_in builtin_cmd[] = {
 int cd_cmd(int argc, char *args[]) {
     if (args[1] == NULL) {
         args[1] = getenv("HOME");
+        chdir(args[1]);
     }
     if (chdir(args[1]) != 0) {
-        perror("No directory");
         set_result(chdir(args[1]));
+        perror("No directory");
     }
     return 0;
 }
@@ -76,6 +77,10 @@ void sigint_handler(int signo) {
     fflush(stdout);
     printf("\n");
 }
+
+// void handle_history() {
+
+// }
 
 int main(void)
 {
@@ -191,6 +196,8 @@ int main(void)
             /* We are the parent process */
             int status = 0;
             waitpid(child, &status, 0);
+            LOG("Status: %d", status);
+            set_result(status);
         }
     }
     hist_destroy();

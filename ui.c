@@ -27,7 +27,7 @@ static int command_num = 1; //set starting command number to 1
 
 int counter = 0;
 
-static int result = 0;
+static int status_result = 0;
 
 int get_count()
 {
@@ -41,7 +41,7 @@ void sum_count()
 
 void set_result(int cmd_status)
 {
-    result = cmd_status;
+    status_result = cmd_status;
 }
 
 void init_ui(void)
@@ -77,32 +77,27 @@ char *prompt_line(void)
     //retrieve info
     gethostname(hostname, 100);
     getlogin_r(username, 100);
-    getcwd(cwd, 100);
+    getcwd(cwd, PATH_MAX);
     struct passwd *pws;
     pws = getpwuid(getuid());
 
     
     int len = strlen(pws->pw_dir);
     if (strncmp(cwd, pws->pw_dir, len) == 0) {
-        LOG("Length = %d", len);
-        LOG("CWD = %s", cwd);
-        *(cwd+len) = '~';
-        *(cwd+len+1) = '/';
-        ptr = (cwd+len);
-        LOG("PTR = %s", ptr);
+        ptr = cwd+len-1;
+        ptr[0] = '~';
     }
 
     char *prompt_str = calloc(80, sizeof(char));
 
-
-    if (result == 0) {
+    if (status_result == 0) {
         sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "VALID", command_num++, username, hostname, ptr, '$');
     }
     else {
         sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "INVALID", command_num++, username, hostname, ptr, '$');
     }
     //HELP!!! if invalid command
-
+    LOG("RESULT: %s %s\n",cwd, pws->pw_dir);
     return prompt_str;
 
     free(username);
