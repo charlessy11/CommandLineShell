@@ -18,8 +18,8 @@
 #include "util.h"
 
 int cd_cmd(int argc, char *args[]);
-int exit_cmd(int argc, char *args[]);
-int hist_cmd(int argc, char *args[]);
+int exit_cmd();
+int hist_cmd();
 int handle_builtins(int argc, char *args[]);
 
 
@@ -38,6 +38,7 @@ struct built_in builtin_cmd[] = {
     {"cd", cd_cmd},
     {"exit", exit_cmd},
     {"history", hist_cmd},
+    // {"!!", double_bang}
 };
 
 int cd_cmd(int argc, char *args[]) {
@@ -52,16 +53,27 @@ int cd_cmd(int argc, char *args[]) {
     return 0;
 }
 
-int exit_cmd(int argc, char *args[]) {
+int exit_cmd() {
     hist_destroy();
     exit(0);
     return 0;
 }
 
-int hist_cmd(int argc, char *args[]) {
+int hist_cmd() {
     hist_print();
     return 0;
 }
+
+// static bool is_hist = false;
+// int double_bang(int argc, char *args[]) {
+//     char *entry = hist_search_cnum(hist_last_cnum());
+//     if (entry == NULL) {
+//         continue;
+//     }
+//     strcpy(next_tok, entry);
+//     hist_add(hist_search_cnum(hist_last_cnum()));
+//     is_hist = true;
+// }
 
 int handle_builtins(int argc, char *args[]) {
     int i;
@@ -79,20 +91,15 @@ void sigint_handler(int signo) {
     printf("\n");
 }
 
-// Function to implement substring function
 char* substr(char *dest, const char *src, int start, int end)
 {
-    // extracts n characters from source string starting from beg index
-    // and copy them into the destination string
     while (end != 0) {
         *dest = *(src + start);
         ++dest;
         ++src;
         --end;
     }
-    // null terminate destination string
     *dest = '\0';
-    // return the destination string
     return dest;
 }
 
@@ -125,48 +132,40 @@ int main(void)
         char *next_tok = command;
         char *curr_tok;
 
-        char single_bang[2] = { 0 };
-        single_bang[0] = *(command);
-        single_bang[1] = '\0';
-
-        char double_bang[3] = { 0 };
-        double_bang[0] = *(command);
-        double_bang[1] = *(command + 1);
-        double_bang[2] = '\0';
-
         bool is_hist = false;
 
-        if (strcmp(double_bang, "!!") == 0) {
-            char *entry = hist_search_cnum(hist_last_cnum());
-            if (entry == NULL) {
-                continue;
-            }
-            strcpy(next_tok, entry);
-            hist_add(hist_search_cnum(hist_last_cnum()));
-            is_hist = true;
-        }
-        else if (strcmp(single_bang, "!") == 0) {
-            char prefix[10] = { 0 };
-            substr(prefix, next_tok, 1, strlen(next_tok));
-            int num = atoi(prefix);
-            if (num == 0) {
-                char *entry = hist_search_prefix(prefix);
+        if (command[0] == '!') {
+            if (command[1] == '!') {
+                char *entry = hist_search_cnum(hist_last_cnum());
                 if (entry == NULL) {
                     continue;
                 }
                 strcpy(next_tok, entry);
-                hist_add(entry);
+                hist_add(hist_search_cnum(hist_last_cnum()));
                 is_hist = true;
-            }
-            else {
-                char *cmd = hist_search_cnum(num);
-                if (cmd == NULL) {
-                    continue;
+                } else {
+                char prefix[10] = { 0 };
+                substr(prefix, next_tok, 1, strlen(next_tok));
+                int num = atoi(prefix);
+                if (num == 0) {
+                    char *entry = hist_search_prefix(prefix);
+                    if (entry == NULL) {
+                        continue;
+                    }
+                    strcpy(next_tok, entry);
+                    hist_add(entry);
+                    is_hist = true;
                 }
-                strcpy(next_tok, cmd);
-                hist_add(hist_search_cnum(num));
-                is_hist = true;
-            }    
+                else {
+                    char *cmd = hist_search_cnum(num);
+                    if (cmd == NULL) {
+                        continue;
+                    }
+                    strcpy(next_tok, cmd);
+                    hist_add(hist_search_cnum(num));
+                    is_hist = true;
+                }    
+            }
         }
         if (is_hist == false) {
             hist_add(in);
