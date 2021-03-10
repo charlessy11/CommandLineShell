@@ -22,6 +22,7 @@ int exit_cmd(int argc, char *args[]);
 int hist_cmd(int argc, char *args[]);
 int handle_builtins(int argc, char *args[]);
 
+
 /**
  * struct to store built-in cmd info
  */ 
@@ -34,8 +35,8 @@ struct built_in {
  * built-ins and their associated functions
  */ 
 struct built_in builtin_cmd[] = {
-    {"exit", exit_cmd},
     {"cd", cd_cmd},
+    {"exit", exit_cmd},
     {"history", hist_cmd},
 };
 
@@ -78,6 +79,23 @@ void sigint_handler(int signo) {
     printf("\n");
 }
 
+// Function to implement substring function
+char* substr(char *dest, const char *src, int start, int end)
+{
+    // extracts n characters from source string starting from beg index
+    // and copy them into the destination string
+    while (end != 0) {
+        *dest = *(src + start);
+        ++dest;
+        ++src;
+        --end;
+    }
+    // null terminate destination string
+    *dest = '\0';
+    // return the destination string
+    return dest;
+}
+
 // void handle_history() {
 
 // }
@@ -107,18 +125,18 @@ int main(void)
         char *next_tok = command;
         char *curr_tok;
 
-        char bang[2] = { 0 };
-        bang[0] = *(command);
-        bang[1] = '\0';
+        char single_bang[2] = { 0 };
+        single_bang[0] = *(command);
+        single_bang[1] = '\0';
 
-        char bangbang[3] = { 0 };
-        bangbang[0] = *(command);
-        bangbang[1] = *(command + 1);
-        bangbang[2] = '\0';
+        char double_bang[3] = { 0 };
+        double_bang[0] = *(command);
+        double_bang[1] = *(command + 1);
+        double_bang[2] = '\0';
 
         bool is_hist = false;
 
-        if (strcmp(bangbang, "!!") == 0) {
+        if (strcmp(double_bang, "!!") == 0) {
             char *entry = hist_search_cnum(hist_last_cnum());
             if (entry == NULL) {
                 continue;
@@ -127,7 +145,7 @@ int main(void)
             hist_add(hist_search_cnum(hist_last_cnum()));
             is_hist = true;
         }
-        else if (strcmp(bang, "!") == 0) {
+        else if (strcmp(single_bang, "!") == 0) {
             char prefix[10] = { 0 };
             substr(prefix, next_tok, 1, strlen(next_tok));
             int num = atoi(prefix);

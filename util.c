@@ -54,20 +54,3 @@ char *next_token(char **str_ptr, const char *delim)
 
     return current_ptr;
 }
-
-// Function to implement substring function in C
-char* substr(char *dest, const char *src, int start, int end)
-{
-    // extracts n characters from source string starting from beg index
-    // and copy them into the destination string
-    while (end != 0) {
-        *dest = *(src + start);
-        ++dest;
-        ++src;
-        --end;
-    }
-    // null terminate destination string
-    *dest = '\0';
-    // return the destination string
-    return dest;
-}
