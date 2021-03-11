@@ -1,3 +1,9 @@
+/**
+ * @file
+ *
+ * Contains shell utility functions.
+ */
+
 #include "util.h"
 
 #include <string.h>

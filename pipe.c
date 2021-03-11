@@ -1,57 +1,78 @@
+/**
+ * @file
+ *
+ * Deals with pipes.
+ */
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <string.h>
 
+#include "pipe.h"
+
+bool statusCode = true;
+bool interactive = true;
+int numCommands = 0;
+bool executing = false;
+
+
+/**
+* Command line struct
+*/
 struct command_line {
     char **tokens;
     bool stdout_pipe; //determine when you've reached the last command in the pipeline
     char *stdout_file; //decide whether the final result gets written to a file or the terminal
 };
 
-//func that takes in tokens and length of tokens
-//set up struct (by making | = null) and divides input 
-//call execute pipeline
-//returns status of execute_pipeline
-
-// int set_up_cmd_line(char tokens, int len) 
-// {
-//     // int temp = 0;
-//     // while (temp != len) {
-//     //     if (tokens == '|') {
-            
-//     //     }
-//     // }
-//     int i;
-//     for (i = 0; i < len; i++) {
-//         if ()
-//     }
-// }
-
-void prepareCmds(char **args, int count, struct command_line *cmds) {
-    int in = 0;
-    cmds[in].tokens = &args[0];
-    cmds[in].stdout_pipe = true;
-    cmds[in].stdout_file = NULL;
-    in++;
-
-    for(int i = 0; i < count; i++) {
-        if(strcmp(args[i], "|") == 0){
-            args[i] = 0;
-            cmds[in].tokens = &args[i + 1];
-            cmds[in].stdout_pipe = true;
-            cmds[in].stdout_file = NULL;
-            in++;
-        } else if(strcmp(args[i], ">") == 0){
-            args[i] = 0;
-            cmds[in - 1].stdout_file = args[i + 1];
-        }
-
+// allocate initial memory for a list of 128 command_line structs. 
+// TODO: allocate dynamically; malloc one ptr, then realloc as needed
+struct command_line* create_commands() {
+    struct command_line *commands = malloc(sizeof(struct command_line*) * 128);
+    // allocate initial memory for a list of
+    for(int i = 0; i < 128; i++) {
+        commands[i].tokens = malloc(sizeof(char) * 129); // inital command line capacity of 128 ch
+        commands[i].stdout_pipe = false;
+        commands[i].stdout_file = NULL;
     }
+    return commands; 
+}
 
-    cmds[in - 1].stdout_pipe = false;
+int free_commands(struct command_line *commands) {
+    free(commands);
+    return 0;
+}
+
+int tokenize(char* command, struct command_line* commands) {
+    char *next_tok = command;
+    char *curr_tok;
+    int index = 0;
+    while((curr_tok = next_token(&next_tok, " \t")) != NULL) {
+        // check for special characters: | and >
+        if(strcmp(curr_tok, "|") == 0) {
+            // skip this token, update pipe info, increment command number
+            commands[numCommands].stdout_pipe = true;
+            commands[numCommands].tokens[index] = NULL; // null terminate
+            numCommands++;
+            index = 0;
+        }
+        else if(strcmp(curr_tok, ">") == 0) {
+            // set the next argument to the output file
+            curr_tok = next_token(&next_tok, " \t");
+            commands[numCommands].stdout_file = curr_tok;
+        }
+        else {
+            // add token to command
+            commands[numCommands].tokens[index++] = curr_tok;
+        }
+    }
+    commands[numCommands].tokens[index] = NULL; // null terminate
+    if(numCommands == 0 && index != 0) numCommands = 1;
+    return 0;
 }
 
 void execute_pipeline(struct command_line *cmds)

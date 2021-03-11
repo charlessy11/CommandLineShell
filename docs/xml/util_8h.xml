@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="util_8h" kind="file" language="C++">
+    <compoundname>util.h</compoundname>
+    <includedby refid="shell_8c" local="yes">shell.c</includedby>
+    <includedby refid="ui_8c" local="yes">ui.c</includedby>
+    <includedby refid="util_8c" local="yes">util.c</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="3">
+        <label>ui.c</label>
+        <link refid="ui_8c"/>
+      </node>
+      <node id="4">
+        <label>util.c</label>
+        <link refid="util_8c"/>
+      </node>
+      <node id="1">
+        <label>util.h</label>
+        <link refid="util_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="util_8h_1a36cc4e6b1ce708ed7492ae0979b10bf5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* next_token</definition>
+        <argsstring>(char **str_ptr, const char *delim)</argsstring>
+        <name>next_token</name>
+        <param>
+          <type>char **</type>
+          <declname>str_ptr</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>delim</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Retrieves the next token from a string.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>str_ptr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>maintains context in the string, i.e., where the next token in the string will be. If the function returns token N, then str_ptr will be updated to point to token N+1. To initialize, declare a char * that points to the string being tokenized. The pointer will be updated after each successive call to next_token. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>delim</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the set of characters to use as delimiters</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>char pointer to the next token in the string.</para>
+</simplesect>
+Retrieves the next token from a string.</para>
+<para>Parameters:<itemizedlist>
+<listitem><para>str_ptr: maintains context in the string, i.e., where the next token in the string will be. If the function returns token N, then str_ptr will be updated to point to token N+1. To initialize, declare a char * that points to the string being tokenized. The pointer will be updated after each successive call to next_token.</para>
+</listitem><listitem><para>delim: the set of characters to use as delimiters</para>
+</listitem></itemizedlist>
+</para>
+<para>Returns: char pointer to the next token in the string. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="util.h" line="22" column="6" bodyfile="util.c" bodystart="26" bodyend="62" declfile="util.h" declline="22" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Contains shell utility functions. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UTIL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UTIL_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="util_8h_1a36cc4e6b1ce708ed7492ae0979b10bf5" kindref="member">next_token</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**str_ptr,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*delim);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="util.h"/>
+  </compounddef>
+</doxygen>

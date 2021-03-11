@@ -1,0 +1,158 @@
+\hypertarget{ui_8h}{}\doxysection{ui.\+h File Reference}
+\label{ui_8h}\index{ui.h@{ui.h}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$$\ast$ \mbox{\hyperlink{ui_8h_a936b97cc1b537e7eafa3bad9c507fac5}{command\+\_\+completion}} (const char $\ast$text, int start, int end)
+\item 
+char $\ast$ \mbox{\hyperlink{ui_8h_a389022a6c7bfb51f750434f0378a0790}{command\+\_\+generator}} (const char $\ast$text, int state)
+\item 
+void \mbox{\hyperlink{ui_8h_a2c48080cb120e8745971d8c44f0e010f}{init\+\_\+ui}} (void)
+\item 
+int \mbox{\hyperlink{ui_8h_a830f1692d60868f535069cc6b056ac65}{key\+\_\+up}} (int count, int key)
+\item 
+int \mbox{\hyperlink{ui_8h_a8c4f03db9a6667ea25d924877be90734}{key\+\_\+down}} (int count, int key)
+\item 
+char $\ast$ \mbox{\hyperlink{ui_8h_af9923f629a28db12e67bb34c7d68fb36}{prompt\+\_\+line}} (void)
+\item 
+char $\ast$ \mbox{\hyperlink{ui_8h_a5f1b7595f2672ad9842f962ff050183d}{read\+\_\+command}} (void)
+\item 
+int \mbox{\hyperlink{ui_8h_a9270d80520077680951d5d67f8cd380f}{get\+\_\+count}} ()
+\item 
+void \mbox{\hyperlink{ui_8h_a39cb955fd96b253bfd4efdf5ee4ec0e7}{sum\+\_\+count}} ()
+\item 
+void \mbox{\hyperlink{ui_8h_ab463e7280ec827c3bc4eb05c74436b22}{set\+\_\+result}} (int cmd\+\_\+status)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Text-\/based UI functionality. These functions are primarily concerned with interacting with the readline library. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ui_8h_a936b97cc1b537e7eafa3bad9c507fac5}\label{ui_8h_a936b97cc1b537e7eafa3bad9c507fac5}} 
+\index{ui.h@{ui.h}!command\_completion@{command\_completion}}
+\index{command\_completion@{command\_completion}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{command\_completion()}{command\_completion()}}
+{\footnotesize\ttfamily char$\ast$$\ast$ command\+\_\+completion (\begin{DoxyParamCaption}\item[{const char $\ast$}]{text,  }\item[{int}]{start,  }\item[{int}]{end }\end{DoxyParamCaption})}
+
+Completes command
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & the text command \\
+\hline
+{\em start} & the start of the command \\
+\hline
+{\em end} & the end of the command\\
+\hline
+\end{DoxyParams}
+Tell readline that if we don\textquotesingle{}t find a suitable completion, it should fall back on its built-\/in filename completion. \mbox{\Hypertarget{ui_8h_a389022a6c7bfb51f750434f0378a0790}\label{ui_8h_a389022a6c7bfb51f750434f0378a0790}} 
+\index{ui.h@{ui.h}!command\_generator@{command\_generator}}
+\index{command\_generator@{command\_generator}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{command\_generator()}{command\_generator()}}
+{\footnotesize\ttfamily char$\ast$ command\+\_\+generator (\begin{DoxyParamCaption}\item[{const char $\ast$}]{text,  }\item[{int}]{state }\end{DoxyParamCaption})}
+
+Generates command
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & the text command \\
+\hline
+{\em state} & the state of the command\\
+\hline
+\end{DoxyParams}
+This function is called repeatedly by the readline library to build a list of possible completions. It returns one match per function call. Once there are no more completions available, it returns NULL. \mbox{\Hypertarget{ui_8h_a9270d80520077680951d5d67f8cd380f}\label{ui_8h_a9270d80520077680951d5d67f8cd380f}} 
+\index{ui.h@{ui.h}!get\_count@{get\_count}}
+\index{get\_count@{get\_count}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{get\_count()}{get\_count()}}
+{\footnotesize\ttfamily int get\+\_\+count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retrieves command count
+
+\begin{DoxyReturn}{Returns}
+current command count 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ui_8h_a2c48080cb120e8745971d8c44f0e010f}\label{ui_8h_a2c48080cb120e8745971d8c44f0e010f}} 
+\index{ui.h@{ui.h}!init\_ui@{init\_ui}}
+\index{init\_ui@{init\_ui}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{init\_ui()}{init\_ui()}}
+{\footnotesize\ttfamily void init\+\_\+ui (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initialize user interface \mbox{\Hypertarget{ui_8h_a8c4f03db9a6667ea25d924877be90734}\label{ui_8h_a8c4f03db9a6667ea25d924877be90734}} 
+\index{ui.h@{ui.h}!key\_down@{key\_down}}
+\index{key\_down@{key\_down}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{key\_down()}{key\_down()}}
+{\footnotesize\ttfamily int key\+\_\+down (\begin{DoxyParamCaption}\item[{int}]{count,  }\item[{int}]{key }\end{DoxyParamCaption})}
+
+Handles event when down key is pressed
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & the count \\
+\hline
+{\em key} & the key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+status the status 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ui_8h_a830f1692d60868f535069cc6b056ac65}\label{ui_8h_a830f1692d60868f535069cc6b056ac65}} 
+\index{ui.h@{ui.h}!key\_up@{key\_up}}
+\index{key\_up@{key\_up}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{key\_up()}{key\_up()}}
+{\footnotesize\ttfamily int key\+\_\+up (\begin{DoxyParamCaption}\item[{int}]{count,  }\item[{int}]{key }\end{DoxyParamCaption})}
+
+Handles event when up key is pressed
+
+
+\begin{DoxyParams}{Parameters}
+{\em count} & the count \\
+\hline
+{\em key} & the key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+status the status 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ui_8h_af9923f629a28db12e67bb34c7d68fb36}\label{ui_8h_af9923f629a28db12e67bb34c7d68fb36}} 
+\index{ui.h@{ui.h}!prompt\_line@{prompt\_line}}
+\index{prompt\_line@{prompt\_line}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{prompt\_line()}{prompt\_line()}}
+{\footnotesize\ttfamily char$\ast$ prompt\+\_\+line (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Sets the prompt line
+
+\begin{DoxyReturn}{Returns}
+prompt string the prompt string 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ui_8h_a5f1b7595f2672ad9842f962ff050183d}\label{ui_8h_a5f1b7595f2672ad9842f962ff050183d}} 
+\index{ui.h@{ui.h}!read\_command@{read\_command}}
+\index{read\_command@{read\_command}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{read\_command()}{read\_command()}}
+{\footnotesize\ttfamily char$\ast$ read\+\_\+command (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Reads the command input by user
+
+\begin{DoxyReturn}{Returns}
+command input 
+\end{DoxyReturn}
+\mbox{\Hypertarget{ui_8h_ab463e7280ec827c3bc4eb05c74436b22}\label{ui_8h_ab463e7280ec827c3bc4eb05c74436b22}} 
+\index{ui.h@{ui.h}!set\_result@{set\_result}}
+\index{set\_result@{set\_result}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{set\_result()}{set\_result()}}
+{\footnotesize\ttfamily void set\+\_\+result (\begin{DoxyParamCaption}\item[{int}]{cmd\+\_\+status }\end{DoxyParamCaption})}
+
+Sets result based on the status of last command
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd\+\_\+status} & the status of last command \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{ui_8h_a39cb955fd96b253bfd4efdf5ee4ec0e7}\label{ui_8h_a39cb955fd96b253bfd4efdf5ee4ec0e7}} 
+\index{ui.h@{ui.h}!sum\_count@{sum\_count}}
+\index{sum\_count@{sum\_count}!ui.h@{ui.h}}
+\doxysubsubsection{\texorpdfstring{sum\_count()}{sum\_count()}}
+{\footnotesize\ttfamily void sum\+\_\+count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Adds to command count 

@@ -1,0 +1,131 @@
+\hypertarget{jobs_8c}{}\doxysection{jobs.\+c File Reference}
+\label{jobs_8c}\index{jobs.c@{jobs.c}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}jobs.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}logger.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ui.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structjobEntry}{job\+Entry}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{jobs_8c_a00bbec672188a3fe6af38a03dab31b46}{job\+\_\+init}} (unsigned int limit)
+\item 
+int \mbox{\hyperlink{jobs_8c_aa83a64ad009b61a00b79522bd4a952db}{get\+Jobs\+Overflow}} ()
+\item 
+int \mbox{\hyperlink{jobs_8c_aed746602bb4e9c8db5b9bc29febc8a27}{getmax\+Jobs}} ()
+\item 
+int \mbox{\hyperlink{jobs_8c_a9c73be9e792d12c0c1f5a5ac285a6191}{getjob\+Number}} ()
+\item 
+void \mbox{\hyperlink{jobs_8c_acabf78f735fc0e296ce86d10c0be2fe1}{job\+\_\+add}} (const char $\ast$cmd)
+\item 
+void \mbox{\hyperlink{jobs_8c_afc2beb4245cf8e54b00b4578d2c9b76e}{job\+\_\+print}} (void)
+\item 
+int \mbox{\hyperlink{jobs_8c_aaa1830f25faebc48d786eef73340f2f7}{job\+\_\+last\+\_\+cnum}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{jobs_8c_ac41f0fd01371440096b805b375c15553}\label{jobs_8c_ac41f0fd01371440096b805b375c15553}} 
+int {\bfseries job\+Number} = 0
+\item 
+\mbox{\Hypertarget{jobs_8c_a286ce315a016338cd3c0d2b3d85f8994}\label{jobs_8c_a286ce315a016338cd3c0d2b3d85f8994}} 
+int {\bfseries job\+Entry\+Index} = 0
+\item 
+\mbox{\Hypertarget{jobs_8c_a5970967e0d4318a74c20bdeb0d583e66}\label{jobs_8c_a5970967e0d4318a74c20bdeb0d583e66}} 
+int {\bfseries jobs\+Count\+Overflow} = 0
+\item 
+\mbox{\Hypertarget{jobs_8c_aaa478abd605a7171631b5113792f606a}\label{jobs_8c_aaa478abd605a7171631b5113792f606a}} 
+int {\bfseries max\+Jobs} = 10
+\item 
+struct \mbox{\hyperlink{structjobEntry}{job\+Entry}} \mbox{\hyperlink{jobs_8c_ac98fa64cd5930a738915ac6a56eeff60}{job\+List}} \mbox{[}10\mbox{]} = \{0\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains shell background job data structures and retrieval functions. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{jobs_8c_a9c73be9e792d12c0c1f5a5ac285a6191}\label{jobs_8c_a9c73be9e792d12c0c1f5a5ac285a6191}} 
+\index{jobs.c@{jobs.c}!getjobNumber@{getjobNumber}}
+\index{getjobNumber@{getjobNumber}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{getjobNumber()}{getjobNumber()}}
+{\footnotesize\ttfamily int getjob\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Current Job Number 
+\end{DoxyReturn}
+\mbox{\Hypertarget{jobs_8c_aa83a64ad009b61a00b79522bd4a952db}\label{jobs_8c_aa83a64ad009b61a00b79522bd4a952db}} 
+\index{jobs.c@{jobs.c}!getJobsOverflow@{getJobsOverflow}}
+\index{getJobsOverflow@{getJobsOverflow}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{getJobsOverflow()}{getJobsOverflow()}}
+{\footnotesize\ttfamily int get\+Jobs\+Overflow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Overflow count 
+\end{DoxyReturn}
+\mbox{\Hypertarget{jobs_8c_aed746602bb4e9c8db5b9bc29febc8a27}\label{jobs_8c_aed746602bb4e9c8db5b9bc29febc8a27}} 
+\index{jobs.c@{jobs.c}!getmaxJobs@{getmaxJobs}}
+\index{getmaxJobs@{getmaxJobs}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{getmaxJobs()}{getmaxJobs()}}
+{\footnotesize\ttfamily int getmax\+Jobs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Max Job Count 
+\end{DoxyReturn}
+\mbox{\Hypertarget{jobs_8c_acabf78f735fc0e296ce86d10c0be2fe1}\label{jobs_8c_acabf78f735fc0e296ce86d10c0be2fe1}} 
+\index{jobs.c@{jobs.c}!job\_add@{job\_add}}
+\index{job\_add@{job\_add}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{job\_add()}{job\_add()}}
+{\footnotesize\ttfamily void job\+\_\+add (\begin{DoxyParamCaption}\item[{const char $\ast$}]{cmd }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & Add Command to the List \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{jobs_8c_a00bbec672188a3fe6af38a03dab31b46}\label{jobs_8c_a00bbec672188a3fe6af38a03dab31b46}} 
+\index{jobs.c@{jobs.c}!job\_init@{job\_init}}
+\index{job\_init@{job\_init}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{job\_init()}{job\_init()}}
+{\footnotesize\ttfamily void job\+\_\+init (\begin{DoxyParamCaption}\item[{unsigned int}]{limit }\end{DoxyParamCaption})}
+
+Init function 
+\begin{DoxyParams}{Parameters}
+{\em limit} & max job size \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{jobs_8c_aaa1830f25faebc48d786eef73340f2f7}\label{jobs_8c_aaa1830f25faebc48d786eef73340f2f7}} 
+\index{jobs.c@{jobs.c}!job\_last\_cnum@{job\_last\_cnum}}
+\index{job\_last\_cnum@{job\_last\_cnum}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{job\_last\_cnum()}{job\_last\_cnum()}}
+{\footnotesize\ttfamily int job\+\_\+last\+\_\+cnum (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+most recent job list count 
+\end{DoxyReturn}
+\mbox{\Hypertarget{jobs_8c_afc2beb4245cf8e54b00b4578d2c9b76e}\label{jobs_8c_afc2beb4245cf8e54b00b4578d2c9b76e}} 
+\index{jobs.c@{jobs.c}!job\_print@{job\_print}}
+\index{job\_print@{job\_print}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{job\_print()}{job\_print()}}
+{\footnotesize\ttfamily void job\+\_\+print (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Prints the job list 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{jobs_8c_ac98fa64cd5930a738915ac6a56eeff60}\label{jobs_8c_ac98fa64cd5930a738915ac6a56eeff60}} 
+\index{jobs.c@{jobs.c}!jobList@{jobList}}
+\index{jobList@{jobList}!jobs.c@{jobs.c}}
+\doxysubsubsection{\texorpdfstring{jobList}{jobList}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structjobEntry}{job\+Entry}} job\+List\mbox{[}10\mbox{]} = \{0\}}
+
+List of job entries 

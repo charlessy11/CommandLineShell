@@ -1,3 +1,9 @@
+/**
+ * @file
+ *
+ * Handles history.
+ */
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,19 +12,23 @@
 #include "history.h"
 #include "ui.h"
 
-int cmd_count = 0;
-int overflow_count = 0;
-int max_sz = 0;
-
-/* history entry */
+/** 
+* history entry 
+*/
 struct hist_entry
 {
     int cmd_num;
     char command[100];
 };
 
-/* list of history entries */
-struct hist_entry *hist_list = {0};
+/**
+* list of history entries 
+*/
+struct hist_entry *hist_list;
+
+static int cmd_count = 0;
+static int max_sz = 0;
+static int counter = 0;
 
 void hist_init(unsigned int limit)
 {
@@ -34,8 +44,8 @@ void hist_destroy(void)
 void hist_add(const char *cmd)
 {
     if (cmd_count >= max_sz) {
-        overflow_count++;
         cmd_count = 0;
+        counter++;
     }
     strcpy(hist_list[cmd_count].command, cmd);
     hist_list[cmd_count].cmd_num = get_count();
@@ -44,15 +54,17 @@ void hist_add(const char *cmd)
 
 void hist_print(void)
 {
-    int amount = overflow_count * max_sz;
-    int i;
-    if (amount > 0) {
-        for (i = cmd_count; i < max_sz; i++) {
+    int i = cmd_count;
+    while (i != max_sz) {
+        if ((max_sz * counter) > 0) {
             printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].command);
         }
+        ++i;
     }
-    for (i = 0; i < cmd_count; i++) {
-        printf("%d  %s\n", hist_list[i].cmd_num + 1, hist_list[i].command);
+    int j = 0;
+    while (j != cmd_count) {
+        printf("%d  %s\n", hist_list[j].cmd_num + 1, hist_list[j].command);
+        ++j;
     }
     fflush(stdout);
 }
@@ -60,18 +72,21 @@ void hist_print(void)
 char *hist_search_prefix(char *prefix)
 {
     int len = strlen(prefix);
-    int i;
-    for (i = cmd_count - 1; i >= 0; i--) {
-        if (strncmp(prefix, hist_list[i].command, len) == 0) {
+    int i = cmd_count - 1;
+    while (i != 0) {
+       if (strncmp(prefix, hist_list[i].command, len) == 0) {
             return hist_list[i].command;
-        }
+        } 
+        --i;
     }
-    if (overflow_count > 0) {
-        for (i = max_sz - 1; i >= cmd_count; i--) {
-            if (strncmp(prefix, hist_list[i].command, len) == 0) {
-                return hist_list[i].command;
+    int j = max_sz - 1;
+    while (j != cmd_count) {
+        if (counter != 0) {
+            if (strncmp(prefix, hist_list[j].command, len) == 0) {
+                return hist_list[j].command;
             }
         }
+        --j;
     }
 
     return NULL;
@@ -79,22 +94,18 @@ char *hist_search_prefix(char *prefix)
 
 char *hist_search_cnum(int command_number)
 {
-    if (command_number > (overflow_count * max_sz) + cmd_count) {
-        return NULL;
-    }
-    int i;
-    for (i = 0; i < max_sz; i++) {
+    int i = 0;
+    while (i != max_sz) {
         if (command_number - 1 == hist_list[i].cmd_num) {
             return hist_list[i].command;
         }
+        ++i;
     }
-
-    int amount = overflow_count * max_sz;
-    if (command_number - amount - 1 < 0) {
+    if (command_number - ((counter * max_sz) - 1) < 0) {
         return NULL;
     }
     if (command_number > max_sz) {
-        return (hist_list[command_number - amount - 1].command);
+        return (hist_list[command_number - ((counter * max_sz) - 1) - 1].command);
     } else {
         return (hist_list[command_number - 1].command);
     }
@@ -104,5 +115,5 @@ char *hist_search_cnum(int command_number)
 
 int hist_last_cnum(void)
 {
-    return get_count();
+    return cmd_count;
 }

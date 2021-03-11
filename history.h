@@ -1,3 +1,9 @@
+/**
+ * @file
+ *
+ * Handles history.
+ */
+
 #ifndef _HISTORY_H_
 #define _HISTORY_H_
 

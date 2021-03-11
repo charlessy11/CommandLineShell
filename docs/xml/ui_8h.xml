@@ -1,0 +1,359 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="ui_8h" kind="file" language="C++">
+    <compoundname>ui.h</compoundname>
+    <includedby refid="history_8c" local="yes">history.c</includedby>
+    <includedby refid="shell_8c" local="yes">shell.c</includedby>
+    <includedby refid="ui_8c" local="yes">ui.c</includedby>
+    <invincdepgraph>
+      <node id="3">
+        <label>shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="4">
+        <label>ui.c</label>
+        <link refid="ui_8c"/>
+      </node>
+      <node id="1">
+        <label>ui.h</label>
+        <link refid="ui_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>history.c</label>
+        <link refid="history_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ui_8h_1a936b97cc1b537e7eafa3bad9c507fac5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char **</type>
+        <definition>char** command_completion</definition>
+        <argsstring>(const char *text, int start, int end)</argsstring>
+        <name>command_completion</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>start</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>end</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Completes command</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the text command </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>start</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the start of the command </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>end</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the end of the command</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Tell readline that if we don&apos;t find a suitable completion, it should fall back on its built-in filename completion. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="18" column="6" bodyfile="ui.c" bodystart="178" bodyend="183" declfile="ui.h" declline="18" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a389022a6c7bfb51f750434f0378a0790" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* command_generator</definition>
+        <argsstring>(const char *text, int state)</argsstring>
+        <name>command_generator</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Generates command</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the text command </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>state</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the state of the command</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+This function is called repeatedly by the readline library to build a list of possible completions. It returns one match per function call. Once there are no more completions available, it returns NULL. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="26" column="6" bodyfile="ui.c" bodystart="190" bodyend="199" declfile="ui.h" declline="26" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a2c48080cb120e8745971d8c44f0e010f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void init_ui</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_ui</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialize user interface </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="31" column="6" bodyfile="ui.c" bodystart="54" bodyend="74" declfile="ui.h" declline="31" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a830f1692d60868f535069cc6b056ac65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int key_up</definition>
+        <argsstring>(int count, int key)</argsstring>
+        <name>key_up</name>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Handles event when up key is pressed</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the count </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>key</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the key </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>status the status </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="41" column="5" bodyfile="ui.c" bodystart="142" bodyend="156" declfile="ui.h" declline="41" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a8c4f03db9a6667ea25d924877be90734" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int key_down</definition>
+        <argsstring>(int count, int key)</argsstring>
+        <name>key_down</name>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Handles event when down key is pressed</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the count </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>key</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the key </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>status the status </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="49" column="5" bodyfile="ui.c" bodystart="158" bodyend="172" declfile="ui.h" declline="49" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1af9923f629a28db12e67bb34c7d68fb36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* prompt_line</definition>
+        <argsstring>(void)</argsstring>
+        <name>prompt_line</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets the prompt line</para>
+<para><simplesect kind="return"><para>prompt string the prompt string </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="56" column="6" bodyfile="ui.c" bodystart="76" bodyend="113" declfile="ui.h" declline="56" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a5f1b7595f2672ad9842f962ff050183d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* read_command</definition>
+        <argsstring>(void)</argsstring>
+        <name>read_command</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Reads the command input by user</para>
+<para><simplesect kind="return"><para>command input </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="63" column="6" bodyfile="ui.c" bodystart="115" bodyend="130" declfile="ui.h" declline="63" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a9270d80520077680951d5d67f8cd380f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_count</definition>
+        <argsstring>()</argsstring>
+        <name>get_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Retrieves command count</para>
+<para><simplesect kind="return"><para>current command count </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="70" column="5" bodyfile="ui.c" bodystart="39" bodyend="42" declfile="ui.h" declline="70" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1a39cb955fd96b253bfd4efdf5ee4ec0e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sum_count</definition>
+        <argsstring>()</argsstring>
+        <name>sum_count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Adds to command count </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="75" column="6" bodyfile="ui.c" bodystart="44" bodyend="47" declfile="ui.h" declline="75" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="ui_8h_1ab463e7280ec827c3bc4eb05c74436b22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_result</definition>
+        <argsstring>(int cmd_status)</argsstring>
+        <name>set_result</name>
+        <param>
+          <type>int</type>
+          <declname>cmd_status</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets result based on the status of last command</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>cmd_status</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the status of last command </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="ui.h" line="82" column="6" bodyfile="ui.c" bodystart="49" bodyend="52" declfile="ui.h" declline="82" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Text-based UI functionality. These functions are primarily concerned with interacting with the readline library. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UI_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_UI_H_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**<ref refid="ui_8h_1a936b97cc1b537e7eafa3bad9c507fac5" kindref="member">command_completion</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*text,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>start,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>end);</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="ui_8h_1a389022a6c7bfb51f750434f0378a0790" kindref="member">command_generator</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*text,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>state);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ui_8h_1a2c48080cb120e8745971d8c44f0e010f" kindref="member">init_ui</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ui_8h_1a830f1692d60868f535069cc6b056ac65" kindref="member">key_up</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>key);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ui_8h_1a8c4f03db9a6667ea25d924877be90734" kindref="member">key_down</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>key);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="ui_8h_1af9923f629a28db12e67bb34c7d68fb36" kindref="member">prompt_line</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="ui_8h_1a5f1b7595f2672ad9842f962ff050183d" kindref="member">read_command</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ui_8h_1a9270d80520077680951d5d67f8cd380f" kindref="member">get_count</ref>();</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ui_8h_1a39cb955fd96b253bfd4efdf5ee4ec0e7" kindref="member">sum_count</ref>();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ui_8h_1ab463e7280ec827c3bc4eb05c74436b22" kindref="member">set_result</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>cmd_status);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="ui.h"/>
+  </compounddef>
+</doxygen>

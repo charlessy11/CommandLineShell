@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structhist__entry" kind="struct" language="C++" prot="public">
+    <compoundname>hist_entry</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structhist__entry_1ae9bb1ee4b95e67b2b5630075b0b4bf25" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int hist_entry::cmd_num</definition>
+        <argsstring></argsstring>
+        <name>cmd_num</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="history.c" line="20" column="9" bodyfile="history.c" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structhist__entry_1a2e75a290ab6242de18c03f6ba1d35f41" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char hist_entry::command[100]</definition>
+        <argsstring>[100]</argsstring>
+        <name>command</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="history.c" line="21" column="10" bodyfile="history.c" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>history entry </para>
+    </detaileddescription>
+    <location file="history.c" line="18" column="1" bodyfile="history.c" bodystart="19" bodyend="22"/>
+    <listofallmembers>
+      <member refid="structhist__entry_1ae9bb1ee4b95e67b2b5630075b0b4bf25" prot="public" virt="non-virtual"><scope>hist_entry</scope><name>cmd_num</name></member>
+      <member refid="structhist__entry_1a2e75a290ab6242de18c03f6ba1d35f41" prot="public" virt="non-virtual"><scope>hist_entry</scope><name>command</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,3 +1,10 @@
+/**
+ * @file
+ *
+ * Text-based UI functionality. These functions are primarily concerned with
+ * interacting with the readline library.
+ */
+
 #include <stdio.h>
 #include <readline/readline.h>
 #include <locale.h>

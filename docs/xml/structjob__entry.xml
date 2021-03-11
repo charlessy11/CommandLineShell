@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structjob__entry" kind="struct" language="C++" prot="public">
+    <compoundname>job_entry</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structjob__entry_1aa1ad82b9332c6aca9c20f7127c4559a1" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int job_entry::job_num</definition>
+        <argsstring></argsstring>
+        <name>job_num</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="shell.c" line="160" column="9" bodyfile="shell.c" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjob__entry_1a6187b42f2b8bef3597aa5ce74c7dcac1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char job_entry::job[100]</definition>
+        <argsstring>[100]</argsstring>
+        <name>job</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="shell.c" line="161" column="10" bodyfile="shell.c" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Job entry struct </para>
+    </detaileddescription>
+    <location file="shell.c" line="158" column="1" bodyfile="shell.c" bodystart="159" bodyend="162"/>
+    <listofallmembers>
+      <member refid="structjob__entry_1a6187b42f2b8bef3597aa5ce74c7dcac1" prot="public" virt="non-virtual"><scope>job_entry</scope><name>job</name></member>
+      <member refid="structjob__entry_1aa1ad82b9332c6aca9c20f7127c4559a1" prot="public" virt="non-virtual"><scope>job_entry</scope><name>job_num</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

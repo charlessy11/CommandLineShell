@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structbuilt__in" kind="struct" language="C++" prot="public">
+    <compoundname>built_in</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbuilt__in_1ad53d84a28cae17c496f06a94d1d6fc78" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char built_in::user[80]</definition>
+        <argsstring>[80]</argsstring>
+        <name>user</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="shell.c" line="80" column="10" bodyfile="shell.c" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbuilt__in_1a2dc8b2b44c2095089fff35e98a441bed" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* built_in::func) (int argc, char *args[])</definition>
+        <argsstring>)(int argc, char *args[])</argsstring>
+        <name>func</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="shell.c" line="81" column="5" bodyfile="shell.c" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>struct to store built-in cmd info </para>
+    </detaileddescription>
+    <location file="shell.c" line="79" column="1" bodyfile="shell.c" bodystart="79" bodyend="82"/>
+    <listofallmembers>
+      <member refid="structbuilt__in_1a2dc8b2b44c2095089fff35e98a441bed" prot="public" virt="non-virtual"><scope>built_in</scope><name>func</name></member>
+      <member refid="structbuilt__in_1ad53d84a28cae17c496f06a94d1d6fc78" prot="public" virt="non-virtual"><scope>built_in</scope><name>user</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
