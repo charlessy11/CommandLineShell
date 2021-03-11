@@ -1,0 +1,49 @@
+\hypertarget{pipe_8c}{}\doxysection{pipe.\+c File Reference}
+\label{pipe_8c}\index{pipe.c@{pipe.c}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/wait.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}pipe.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcommand__line}{command\+\_\+line}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pipe_8c_ac1d8b3080c5dba5d16e5a8e85947a16d}\label{pipe_8c_ac1d8b3080c5dba5d16e5a8e85947a16d}} 
+struct \mbox{\hyperlink{structcommand__line}{command\+\_\+line}} $\ast$ {\bfseries create\+\_\+commands} ()
+\item 
+\mbox{\Hypertarget{pipe_8c_a712bd76a3e60d5378b852d36f3876cf4}\label{pipe_8c_a712bd76a3e60d5378b852d36f3876cf4}} 
+int {\bfseries free\+\_\+commands} (struct \mbox{\hyperlink{structcommand__line}{command\+\_\+line}} $\ast$commands)
+\item 
+\mbox{\Hypertarget{pipe_8c_aad78d310b783a819533a1fd93b687ec7}\label{pipe_8c_aad78d310b783a819533a1fd93b687ec7}} 
+int {\bfseries tokenize} (char $\ast$command, struct \mbox{\hyperlink{structcommand__line}{command\+\_\+line}} $\ast$commands)
+\item 
+\mbox{\Hypertarget{pipe_8c_a2aa1c4d6ebe65030391ec3c6bb4a11e2}\label{pipe_8c_a2aa1c4d6ebe65030391ec3c6bb4a11e2}} 
+void {\bfseries execute\+\_\+pipeline} (struct \mbox{\hyperlink{structcommand__line}{command\+\_\+line}} $\ast$cmds)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pipe_8c_a5d8934088c443725aca4357d846b5741}\label{pipe_8c_a5d8934088c443725aca4357d846b5741}} 
+bool {\bfseries status\+Code} = true
+\item 
+\mbox{\Hypertarget{pipe_8c_adcad5c4575f31370cebe2ef7121db3ec}\label{pipe_8c_adcad5c4575f31370cebe2ef7121db3ec}} 
+bool {\bfseries interactive} = true
+\item 
+\mbox{\Hypertarget{pipe_8c_a9a58cf874769e6345e9a72a0ef9cb2e0}\label{pipe_8c_a9a58cf874769e6345e9a72a0ef9cb2e0}} 
+int {\bfseries num\+Commands} = 0
+\item 
+\mbox{\Hypertarget{pipe_8c_a9147d2ee24a1b9d7acb265debfb34c85}\label{pipe_8c_a9147d2ee24a1b9d7acb265debfb34c85}} 
+bool {\bfseries executing} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Deals with pipes. 

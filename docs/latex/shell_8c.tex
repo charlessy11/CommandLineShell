@@ -1,0 +1,212 @@
+\hypertarget{shell_8c}{}\doxysection{shell.\+c File Reference}
+\label{shell_8c}\index{shell.c@{shell.c}}
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$pwd.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/param.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/wait.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$dirent.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$limits.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}history.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}logger.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ui.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pipe.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structbuilt__in}{built\+\_\+in}}
+\item 
+struct \mbox{\hyperlink{structjob__entry}{job\+\_\+entry}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{shell_8c_aff7038fb25ce5c574665c25f99f98450}{cd\+\_\+cmd}} (int argc, char $\ast$args\mbox{[}$\,$\mbox{]})
+\item 
+int \mbox{\hyperlink{shell_8c_af7eac76b32b0e9587cab2c2a402e6fc7}{exit\+\_\+cmd}} ()
+\item 
+int \mbox{\hyperlink{shell_8c_a3da5424abb397d3ccbd096bceb957ca5}{hist\+\_\+cmd}} ()
+\item 
+int \mbox{\hyperlink{shell_8c_acc95f71e732c918f307bcf161a70f0a1}{handle\+\_\+builtins}} (int argc, char $\ast$args\mbox{[}$\,$\mbox{]})
+\item 
+int \mbox{\hyperlink{shell_8c_a7d146daa7be17ec5536926cab08d3473}{print\+\_\+jobs}} ()
+\item 
+void \mbox{\hyperlink{shell_8c_a7129b49f2ed57e8b40e3e2abe52d8e19}{add\+\_\+job}} (char $\ast$cmd)
+\item 
+void \mbox{\hyperlink{shell_8c_a4b515337891f74ebd79cb307db16bf33}{sigint\+\_\+handler}} (int signo)
+\item 
+char $\ast$ \mbox{\hyperlink{shell_8c_ad579e708592379a54043046a669dd7f1}{substr}} (char $\ast$dest, const char $\ast$src, int start, int end)
+\item 
+int \mbox{\hyperlink{shell_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structbuilt__in}{built\+\_\+in}} \mbox{\hyperlink{shell_8c_af7fff1df3926122e1744581450907049}{builtin\+\_\+cmd}} \mbox{[}$\,$\mbox{]}
+\item 
+struct \mbox{\hyperlink{structjob__entry}{job\+\_\+entry}} \mbox{\hyperlink{shell_8c_a74b7235a06ead7bbe50a849b32c41969}{job\+\_\+list}} \mbox{[}10\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The shell 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{shell_8c_a7129b49f2ed57e8b40e3e2abe52d8e19}\label{shell_8c_a7129b49f2ed57e8b40e3e2abe52d8e19}} 
+\index{shell.c@{shell.c}!add\_job@{add\_job}}
+\index{add\_job@{add\_job}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{add\_job()}{add\_job()}}
+{\footnotesize\ttfamily void add\+\_\+job (\begin{DoxyParamCaption}\item[{char $\ast$}]{cmd }\end{DoxyParamCaption})}
+
+Add job
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & Add jobs\\
+\hline
+{\em cmd} & the command to be addes \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{shell_8c_aff7038fb25ce5c574665c25f99f98450}\label{shell_8c_aff7038fb25ce5c574665c25f99f98450}} 
+\index{shell.c@{shell.c}!cd\_cmd@{cd\_cmd}}
+\index{cd\_cmd@{cd\_cmd}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{cd\_cmd()}{cd\_cmd()}}
+{\footnotesize\ttfamily int cd\+\_\+cmd (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{args\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Change directory
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful and -\/1 if otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{shell_8c_af7eac76b32b0e9587cab2c2a402e6fc7}\label{shell_8c_af7eac76b32b0e9587cab2c2a402e6fc7}} 
+\index{shell.c@{shell.c}!exit\_cmd@{exit\_cmd}}
+\index{exit\_cmd@{exit\_cmd}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{exit\_cmd()}{exit\_cmd()}}
+{\footnotesize\ttfamily int exit\+\_\+cmd (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Exit command
+
+\begin{DoxyReturn}{Returns}
+0 if successful and -\/1 if otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{shell_8c_acc95f71e732c918f307bcf161a70f0a1}\label{shell_8c_acc95f71e732c918f307bcf161a70f0a1}} 
+\index{shell.c@{shell.c}!handle\_builtins@{handle\_builtins}}
+\index{handle\_builtins@{handle\_builtins}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{handle\_builtins()}{handle\_builtins()}}
+{\footnotesize\ttfamily int handle\+\_\+builtins (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{args\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Handles built-\/ins
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & \\
+\hline
+{\em args} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful and -\/1 if otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{shell_8c_a3da5424abb397d3ccbd096bceb957ca5}\label{shell_8c_a3da5424abb397d3ccbd096bceb957ca5}} 
+\index{shell.c@{shell.c}!hist\_cmd@{hist\_cmd}}
+\index{hist\_cmd@{hist\_cmd}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{hist\_cmd()}{hist\_cmd()}}
+{\footnotesize\ttfamily int hist\+\_\+cmd (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+History command
+
+\begin{DoxyReturn}{Returns}
+0 if successful and -\/1 if otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{shell_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{shell_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{shell.c@{shell.c}!main@{main}}
+\index{main@{main}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+The main \mbox{\Hypertarget{shell_8c_a7d146daa7be17ec5536926cab08d3473}\label{shell_8c_a7d146daa7be17ec5536926cab08d3473}} 
+\index{shell.c@{shell.c}!print\_jobs@{print\_jobs}}
+\index{print\_jobs@{print\_jobs}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{print\_jobs()}{print\_jobs()}}
+{\footnotesize\ttfamily int print\+\_\+jobs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Print job list
+
+\begin{DoxyReturn}{Returns}
+0 if successful
+\end{DoxyReturn}
+Print jobs \mbox{\Hypertarget{shell_8c_a4b515337891f74ebd79cb307db16bf33}\label{shell_8c_a4b515337891f74ebd79cb307db16bf33}} 
+\index{shell.c@{shell.c}!sigint\_handler@{sigint\_handler}}
+\index{sigint\_handler@{sigint\_handler}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{sigint\_handler()}{sigint\_handler()}}
+{\footnotesize\ttfamily void sigint\+\_\+handler (\begin{DoxyParamCaption}\item[{int}]{signo }\end{DoxyParamCaption})}
+
+Handles sigint
+
+
+\begin{DoxyParams}{Parameters}
+{\em signo} & the signal number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{shell_8c_ad579e708592379a54043046a669dd7f1}\label{shell_8c_ad579e708592379a54043046a669dd7f1}} 
+\index{shell.c@{shell.c}!substr@{substr}}
+\index{substr@{substr}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{substr()}{substr()}}
+{\footnotesize\ttfamily char$\ast$ substr (\begin{DoxyParamCaption}\item[{char $\ast$}]{dest,  }\item[{const char $\ast$}]{src,  }\item[{int}]{start,  }\item[{int}]{end }\end{DoxyParamCaption})}
+
+Creates substring
+
+
+\begin{DoxyParams}{Parameters}
+{\em dest} & the destination \\
+\hline
+{\em src} & the source \\
+\hline
+{\em start} & the start \\
+\hline
+{\em end} & the end\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+dest the destination 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{shell_8c_af7fff1df3926122e1744581450907049}\label{shell_8c_af7fff1df3926122e1744581450907049}} 
+\index{shell.c@{shell.c}!builtin\_cmd@{builtin\_cmd}}
+\index{builtin\_cmd@{builtin\_cmd}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{builtin\_cmd}{builtin\_cmd}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structbuilt__in}{built\+\_\+in}} builtin\+\_\+cmd\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}cd"{}}, \mbox{\hyperlink{shell_8c_aff7038fb25ce5c574665c25f99f98450}{cd\_cmd}}\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}exit"{}}, \mbox{\hyperlink{shell_8c_af7eac76b32b0e9587cab2c2a402e6fc7}{exit\_cmd}}\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}history"{}}, \mbox{\hyperlink{shell_8c_a3da5424abb397d3ccbd096bceb957ca5}{hist\_cmd}}\},}
+\DoxyCodeLine{    \{\textcolor{stringliteral}{"{}jobs"{}}, \mbox{\hyperlink{shell_8c_a7d146daa7be17ec5536926cab08d3473}{print\_jobs}}\}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+built-\/ins and their associated functions \mbox{\Hypertarget{shell_8c_a74b7235a06ead7bbe50a849b32c41969}\label{shell_8c_a74b7235a06ead7bbe50a849b32c41969}} 
+\index{shell.c@{shell.c}!job\_list@{job\_list}}
+\index{job\_list@{job\_list}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{job\_list}{job\_list}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structjob__entry}{job\+\_\+entry}} job\+\_\+list\mbox{[}10\mbox{]}}
+
+List of job entries 

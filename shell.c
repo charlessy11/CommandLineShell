@@ -1,3 +1,9 @@
+/**
+ * @file
+ *
+ * The shell
+ */
+
 #include <fcntl.h>
 #include <pwd.h>
 #include <stdbool.h>
@@ -16,11 +22,55 @@
 #include "logger.h"
 #include "ui.h"
 #include "util.h"
+#include "pipe.h"
 
+/**
+* Change directory
+*
+* @param argc
+* @param args
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int cd_cmd(int argc, char *args[]);
+
+/**
+* Exit command
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int exit_cmd();
+
+/**
+* History command
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int hist_cmd();
+
+/**
+* Handles built-ins
+*
+* @param argc
+* @param args
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int handle_builtins(int argc, char *args[]);
+
+/**
+* Print job list
+*
+* @return 0 if successful
+*/
+int print_jobs();
+
+/**
+* Add job
+*
+* @param cmd
+*/
+void add_job(const char *cmd);
 
 
 /**
@@ -38,9 +88,17 @@ struct built_in builtin_cmd[] = {
     {"cd", cd_cmd},
     {"exit", exit_cmd},
     {"history", hist_cmd},
-    // {"!!", double_bang}
+    {"jobs", print_jobs}
 };
 
+/**
+* Change directory
+*
+* @param argc
+* @param args
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int cd_cmd(int argc, char *args[]) {
     if (args[1] == NULL) {
         args[1] = getenv("HOME");
@@ -53,44 +111,124 @@ int cd_cmd(int argc, char *args[]) {
     return 0;
 }
 
+/**
+* Exit command
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int exit_cmd() {
     hist_destroy();
     exit(0);
     return 0;
 }
 
+/**
+* History command
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int hist_cmd() {
     hist_print();
     return 0;
 }
 
-// static bool is_hist = false;
-// int double_bang(int argc, char *args[]) {
-//     char *entry = hist_search_cnum(hist_last_cnum());
-//     if (entry == NULL) {
-//         continue;
-//     }
-//     strcpy(next_tok, entry);
-//     hist_add(hist_search_cnum(hist_last_cnum()));
-//     is_hist = true;
-// }
-
+/**
+* Handles built-ins
+*
+* @param argc
+* @param args
+*
+* @returns 0 if successful and -1 if otherwise
+*/
 int handle_builtins(int argc, char *args[]) {
-    int i;
-    for (i = 0; i < sizeof(builtin_cmd) / sizeof(struct built_in); i++) {
+    int i = 0;
+    while (i != sizeof(builtin_cmd) / sizeof(struct built_in)) {
         if (strcmp(args[0], builtin_cmd[i].user) == 0) {
             return builtin_cmd[i].func(argc, args);
         }
+        ++i;
     }
+
     return -1;
 }
 
+/**
+ * Job entry struct
+ */
+struct job_entry
+{
+    int job_num;
+    char job[100];
+};
+
+/**
+ * List of job entries
+ */
+struct job_entry job_list[10];
+
+static int job_count = 0;
+static int counter = 0;
+static int max_jobs = 10;
+
+/**
+ * Add jobs
+ *
+ * @param cmd the command to be addes
+ */
+void add_job(const char *cmd)
+{
+    if (job_count >= max_jobs) {
+        counter++;
+        job_count = 0;
+    }
+    strcpy(job_list[job_count].job, cmd);
+    job_list[job_count].job_num = job_count;
+    job_count++;
+}
+
+/**
+ * Print jobs
+ */
+int print_jobs()
+{   
+    int i = job_count;
+    if (counter * max_jobs > 0) {
+        while (i != max_jobs) {
+            printf("%s\n", job_list[i].job);
+        }
+        ++i;
+    }
+    int j = 0;
+    while (j != job_count) {
+        printf("%s\n", job_list[i].job);
+        ++j;
+    }
+    fflush(stdout);
+    return 0;
+}
+
+/**
+* Handles sigint
+*
+* @param signo the signal number
+*
+*/
 void sigint_handler(int signo) {
     signal(signo, SIG_IGN);
     fflush(stdout);
     printf("\n");
 }
 
+/**
+* Creates substring
+*
+* @param dest the destination
+* @param src the source
+* @param start the start
+* @param end the end
+*
+* @returns dest the destination
+*/
 char* substr(char *dest, const char *src, int start, int end)
 {
     while (end != 0) {
@@ -103,10 +241,10 @@ char* substr(char *dest, const char *src, int start, int end)
     return dest;
 }
 
-// void handle_history() {
-
-// }
-
+/**
+* The main
+*
+*/
 int main(void)
 {
     init_ui();
@@ -135,7 +273,7 @@ int main(void)
         bool is_hist = false;
 
         if (command[0] == '!') {
-            if (command[1] == '!') {
+            if (command[1] == '!') { //checks if double bang
                 char *entry = hist_search_cnum(hist_last_cnum());
                 if (entry == NULL) {
                     continue;
@@ -156,7 +294,7 @@ int main(void)
                     hist_add(entry);
                     is_hist = true;
                 }
-                else {
+                else { //checks if single bang
                     char *cmd = hist_search_cnum(num);
                     if (cmd == NULL) {
                         continue;
@@ -171,7 +309,31 @@ int main(void)
             hist_add(in);
         }
 
+        bool is_job = false;
+
+        if (*(command + strlen(command) - 1) == '&') {
+            add_job(in); 
+            is_job = true;   
+        }
+
         sum_count();
+
+
+        // if (command[0] == '|') {
+        //     struct command_line *cmds[_POSIX_ARG_MAX];
+        //     prepareCmds(args, tokens, cmds);
+
+        //     pid_t child = fork();
+        //     if (child == 0) {
+        //         execute_pipeline(cmds);
+        //     } else if (child == -1) {
+        //         perror("fork");
+        //     } else {
+        //         int status;
+        //         waitpid(child, &status, 0);
+        //     }
+        //     continue;
+        // }
 
         /* Tokenize. Note that ' \t\n\r' will all be removed. */
         while ((curr_tok = next_token(&next_tok, " \t\n\r")) != NULL) {
@@ -210,11 +372,13 @@ int main(void)
             }
         } 
         else {
-            /* We are the parent process */
-            int status = 0;
-            waitpid(child, &status, 0);
-            LOG("Status: %d", status);
-            set_result(status);
+            if (is_job == false) {
+                 /* We are the parent process */
+                int status = 0;
+                waitpid(child, &status, 0);
+                LOG("Status: %d", status);
+                set_result(status);
+            }
         }
     }
     hist_destroy();

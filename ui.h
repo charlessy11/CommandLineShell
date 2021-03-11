@@ -8,7 +8,21 @@
 #ifndef _UI_H_
 #define _UI_H_
 
+/**
+* Completes command
+*
+* @param text the text command
+* @param start the start of the command
+* @param end the end of the command
+*/
 char **command_completion(const char *text, int start, int end);
+
+/**
+* Generates command
+*
+* @param text the text command
+* @param state the state of the command
+*/
 char *command_generator(const char *text, int state);
 
 /**
@@ -19,18 +33,18 @@ void init_ui(void);
 /**
  * Handles event when up key is pressed
  *
- * @param count
- * @param key
- * @return status
+ * @param count the count
+ * @param key the key
+ * @return status the status
  */
 
 int key_up(int count, int key);
 /**
  * Handles event when down key is pressed
  *
- * @param count
- * @param key
- * @return status
+ * @param count the count
+ * @param key the key
+ * @return status the status
  */
 int key_down(int count, int key);
 

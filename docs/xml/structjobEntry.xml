@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="structjobEntry" kind="struct" language="C++" prot="public">
+    <compoundname>jobEntry</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structjobEntry_1a40043a75813777a3b80bda2e769ef439" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int jobEntry::jobNum</definition>
+        <argsstring></argsstring>
+        <name>jobNum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="shell.c" line="164" column="9" bodyfile="shell.c" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structjobEntry_1aa7d5f3e45538805acd36813a15e26eec" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char jobEntry::job[1000]</definition>
+        <argsstring>[1000]</argsstring>
+        <name>job</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="shell.c" line="165" column="10" bodyfile="shell.c" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Job Entry </para>
+    </detaileddescription>
+    <location file="shell.c" line="162" column="1" bodyfile="shell.c" bodystart="163" bodyend="166"/>
+    <listofallmembers>
+      <member refid="structjobEntry_1aa7d5f3e45538805acd36813a15e26eec" prot="public" virt="non-virtual"><scope>jobEntry</scope><name>job</name></member>
+      <member refid="structjobEntry_1a40043a75813777a3b80bda2e769ef439" prot="public" virt="non-virtual"><scope>jobEntry</scope><name>jobNum</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
