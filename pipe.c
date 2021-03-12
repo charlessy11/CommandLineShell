@@ -17,7 +17,7 @@
 void setup_cmd(char **args, int count, struct command_line *cmds) {
     int index = 0;
     cmds[index].tokens = &args[0];
-    cmds[index].stdout_pipe = true;
+    cmds[index].stdout_pipe = false;
     cmds[index].stdout_file = NULL;
     index++;
 
@@ -25,8 +25,8 @@ void setup_cmd(char **args, int count, struct command_line *cmds) {
         if(strcmp(args[i], "|") == 0){
             args[i] = 0;
             cmds[index].tokens = &args[i + 1];
-            cmds[index].stdout_pipe = true;
-            cmds[index].stdout_file = NULL;
+            cmds[index-1].stdout_pipe = true;
+            // cmds[index].stdout_file = NULL;
             index++;
         } else if(strcmp(args[i], ">") == 0){
             args[i] = 0;
@@ -35,7 +35,7 @@ void setup_cmd(char **args, int count, struct command_line *cmds) {
 
     }
 
-    cmds[index - 1].stdout_pipe = false;
+    // cmds[index - 1].stdout_pipe = false;
 }
 
 void execute_pipeline(struct command_line *cmds)
