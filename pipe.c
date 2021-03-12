@@ -14,6 +14,8 @@
 
 #include "pipe.h"
 
+// int pipeline_status = 0;
+
 void setup_cmd(char **args, int count, struct command_line *cmds) {
     int index = 0;
     cmds[index].tokens = &args[0];
@@ -26,16 +28,13 @@ void setup_cmd(char **args, int count, struct command_line *cmds) {
             args[i] = 0;
             cmds[index].tokens = &args[i + 1];
             cmds[index-1].stdout_pipe = true;
-            // cmds[index].stdout_file = NULL;
             index++;
-        } else if(strcmp(args[i], ">") == 0){
+        } 
+        else if(strcmp(args[i], ">") == 0){
             args[i] = 0;
             cmds[index - 1].stdout_file = args[i + 1];
         }
-
     }
-
-    // cmds[index - 1].stdout_pipe = false;
 }
 
 void execute_pipeline(struct command_line *cmds)
@@ -69,15 +68,22 @@ void execute_pipeline(struct command_line *cmds)
     }
     /* check if pid is the child */
     else if (pid == 0) {
-        dup2(fd[1], STDOUT_FILENO); //dup2 stdout to pipe[1]
+        //dup2 stdout to pipe[1]
+        if (dup2(fd[1], STDOUT_FILENO) == -1) {
+            perror("dup2");
+        } 
         close(fd[0]); //close pipe[0]
         //execvp the command
         execvp(*cmds->tokens, cmds->tokens);
     }
     /* check if pid is the parent */
     else {
-        dup2(fd[0], STDIN_FILENO); //dup2 stdin to pipe[0]
+        //dup2 stdin to pipe[0]
+        if (dup2(fd[0], STDIN_FILENO) == -1) {
+            perror("dup22");
+        } 
         close(fd[1]); //close pipe[1]
         execute_pipeline(++cmds); //move on to the next command in the pipeline
     }
+    // return 0;
 }

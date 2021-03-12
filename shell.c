@@ -323,6 +323,14 @@ int main(void)
             hist_add(in);
         }
 
+        bool is_job = false;
+        if (*(command + strlen(command) - 1) == '&')
+        {
+            add_job(in); 
+            *(command + strlen(command) - 1) = '\0';
+            is_job = true;   
+        }
+
 
         sum_count();
 
@@ -341,34 +349,32 @@ int main(void)
         }
 
         char **cmd_ptr = args;
-        char **next_cmd = NULL;
-        bool is_job = false;
+        // char **next_cmd = NULL;
+        // bool is_job = false;
 
-        for (int i = 0; i < tokens; i++) {
-            if (args[i] != NULL && strcmp("|", args[i]) == 0) {
-                // printf("Pipe found!!");
-                // execute_pipeline(in);
-                struct command_line cmds[_POSIX_ARG_MAX];
-                setup_cmd(args, tokens, cmds);
+        // for (int i = 0; i < tokens; i++) {
+            // if (args[i] != NULL && strcmp("|", args[i]) == 0) {
+                // struct command_line cmds[_POSIX_ARG_MAX];
+                // setup_cmd(args, tokens, cmds);
 
-                pid_t child = fork();
-                if (child == 0) {
-                    execute_pipeline(cmds);
-                } else if (child == -1) {
-                    perror("fork");
-                } else {
-                    int status;
-                    waitpid(child, &status, 0);
-                }
-                args[i] = 0;
-                next_cmd = &args[i + 1];
-            }
-            if (args[i] != NULL && strcmp("&", args[i]) == 0) {
-                add_job(in); 
-                args[i] = 0;
-                is_job = true; 
-            }
-        }
+                // pid_t child = fork();
+                // if (child == 0) {
+                //     execute_pipeline(cmds);
+                // } else if (child == -1) {
+                //     perror("fork");
+                // } else {
+                //     int status;
+                //     waitpid(child, &status, 0);
+                // }
+            //     args[i] = 0;
+            //     next_cmd = &args[i + 1];
+            // }
+            // if (args[i] != NULL && strcmp("&", args[i]) == 0) {
+            //     add_job(in); 
+            //     args[i] = 0;
+            //     is_job = true; 
+            // }
+        // }
 
         int result = handle_builtins(tokens, args);
         if (result == 0)
@@ -376,13 +382,42 @@ int main(void)
             continue;
         }
 
+        // pid_t child = fork();
+        // if (child == -1) {
+        //     perror("fork");
+        //     continue;
+        // } 
+        // else if (child == 0) {
+        //     /* We are the child process */
+        //     int ret = execvp(cmd_ptr[0], cmd_ptr);
+        //     if (ret == -1) {
+        //         perror("execvp");
+        //         close(fileno(stdin));
+        //         close(fileno(stdout));
+        //         close(fileno(stderr));
+        //         return EXIT_FAILURE;
+        //     }
+        // } 
+        // else {
+        //     /* We are the parent process */
+        //     if (is_job == false) {
+        //         int status = 0;
+        //         waitpid(child, &status, 0);
+        //         LOG("Status: %d", status);
+        //         set_result(status);
+        //     } else {
+        //         //add the PID to our job list
+        //     }
+        // }
+        struct command_line cmds[_POSIX_ARG_MAX];
+        setup_cmd(args, tokens, cmds);
+
         pid_t child = fork();
         if (child == -1) {
             perror("fork");
             continue;
-        } 
-        else if (child == 0) {
-            /* We are the child process */
+        } else if (child == 0) {
+            execute_pipeline(cmds);
             int ret = execvp(cmd_ptr[0], cmd_ptr);
             if (ret == -1) {
                 perror("execvp");
@@ -391,9 +426,7 @@ int main(void)
                 close(fileno(stderr));
                 return EXIT_FAILURE;
             }
-        } 
-        else {
-            /* We are the parent process */
+        } else {
             if (is_job == false) {
                 int status = 0;
                 waitpid(child, &status, 0);
