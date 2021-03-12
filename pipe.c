@@ -13,16 +13,6 @@
 #include <string.h>
 
 #include "pipe.h"
-#include "util.h"
-
-int status = 0;
-bool interactive = true;
-int numCommands = 0;
-bool executing = false;
-
-int getStatus() {
-    return status;
-}
 
 /**
 * Command line struct
