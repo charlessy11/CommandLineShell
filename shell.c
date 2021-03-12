@@ -203,6 +203,13 @@ int print_jobs()
         printf("%s\n", job_list[i].job);
         ++j;
     }
+    // int i;
+    // for (i = 0; i < max_jobs; i++) {
+    //     if () //if pid == 0 then dont print
+    //         //else print jobs
+    // }
+
+
     fflush(stdout);
     return 0;
 }
@@ -240,6 +247,15 @@ char* substr(char *dest, const char *src, int start, int end)
     *dest = '\0';
     return dest;
 }
+
+struct command_line {
+    char **tokens;
+    bool stdout_pipe; //determine when you've reached the last command in the pipeline
+    char *stdout_file; //decide whether the final result gets written to a file or the terminal
+};
+
+
+
 
 /**
 * The main
@@ -309,31 +325,8 @@ int main(void)
             hist_add(in);
         }
 
-        bool is_job = false;
-
-        if (*(command + strlen(command) - 1) == '&') {
-            add_job(in); 
-            is_job = true;   
-        }
 
         sum_count();
-
-
-        // if (command[0] == '|') {
-        //     struct command_line *cmds[_POSIX_ARG_MAX];
-        //     prepareCmds(args, tokens, cmds);
-
-        //     pid_t child = fork();
-        //     if (child == 0) {
-        //         execute_pipeline(cmds);
-        //     } else if (child == -1) {
-        //         perror("fork");
-        //     } else {
-        //         int status;
-        //         waitpid(child, &status, 0);
-        //     }
-        //     continue;
-        // }
 
         /* Tokenize. Note that ' \t\n\r' will all be removed. */
         while ((curr_tok = next_token(&next_tok, " \t\n\r")) != NULL) {
@@ -349,6 +342,24 @@ int main(void)
             continue;
         }
 
+        char **cmd_ptr = args;
+        char **next_cmd = NULL;
+        bool is_job = false;
+
+        for (int i = 0; i < tokens; i++) {
+            if (args[i] != NULL && strcmp("|", args[i]) == 0) {
+                printf("Pipe found!!");
+                // execute_pipeline(in);
+                args[i] = 0;
+                next_cmd = &args[i + 1];
+            }
+            if (args[i] != NULL && strcmp("&", args[i]) == 0) {
+                add_job(in); 
+                args[i] = 0;
+                is_job = true; 
+            }
+        }
+
         int result = handle_builtins(tokens, args);
         if (result == 0)
         {
@@ -362,7 +373,7 @@ int main(void)
         } 
         else if (child == 0) {
             /* We are the child process */
-            int ret = execvp(args[0], args);
+            int ret = execvp(cmd_ptr[0], cmd_ptr);
             if (ret == -1) {
                 perror("execvp");
                 close(fileno(stdin));
@@ -372,12 +383,14 @@ int main(void)
             }
         } 
         else {
+            /* We are the parent process */
             if (is_job == false) {
-                 /* We are the parent process */
                 int status = 0;
                 waitpid(child, &status, 0);
                 LOG("Status: %d", status);
                 set_result(status);
+            } else {
+                //add the PID to our job list
             }
         }
     }
