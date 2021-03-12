@@ -23,28 +23,28 @@ struct command_line {
     char *stdout_file; //decide whether the final result gets written to a file or the terminal
 };
 
-void prepareCmds(char **args, int count, struct command_line *cmds) {
-    int in = 0;
-    cmds[in].tokens = &args[0];
-    cmds[in].stdout_pipe = true;
-    cmds[in].stdout_file = NULL;
-    in++;
+void setup_cmd(char **args, int count, struct command_line *cmds) {
+    int index = 0;
+    cmds[index].tokens = &args[0];
+    cmds[index].stdout_pipe = true;
+    cmds[index].stdout_file = NULL;
+    index++;
 
     for(int i = 0; i < count; i++) {
         if(strcmp(args[i], "|") == 0){
             args[i] = 0;
-            cmds[in].tokens = &args[i + 1];
-            cmds[in].stdout_pipe = true;
-            cmds[in].stdout_file = NULL;
-            in++;
+            cmds[index].tokens = &args[i + 1];
+            cmds[index].stdout_pipe = true;
+            cmds[index].stdout_file = NULL;
+            index++;
         } else if(strcmp(args[i], ">") == 0){
             args[i] = 0;
-            cmds[in - 1].stdout_file = args[i + 1];
+            cmds[index - 1].stdout_file = args[i + 1];
         }
 
     }
 
-    cmds[in - 1].stdout_pipe = false;
+    cmds[index - 1].stdout_pipe = false;
 }
 
 void execute_pipeline(struct command_line *cmds)

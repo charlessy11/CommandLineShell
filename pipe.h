@@ -22,6 +22,8 @@ void execute_pipeline(struct command_line *cmds);
 * @param cmds the commands
 */
 
-void prepareCmds(char **args, int count, struct command_line *cmds);
+void setup_cmd(char **args, int count, struct command_line *cmds);
+
+struct command_line;
 
 #endif

@@ -349,7 +349,7 @@ int main(void)
                 // printf("Pipe found!!");
                 // execute_pipeline(in);
                 struct command_line cmds[_POSIX_ARG_MAX];
-                prepareCmds(args, tokens, cmds);
+                setup_cmd(args, tokens, cmds);
 
                 pid_t child = fork();
                 if (child == 0) {
