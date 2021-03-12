@@ -14,15 +14,6 @@
 
 #include "pipe.h"
 
-/**
-* Command line struct
-*/
-struct command_line {
-    char **tokens;
-    bool stdout_pipe; //determine when you've reached the last command in the pipeline
-    char *stdout_file; //decide whether the final result gets written to a file or the terminal
-};
-
 void setup_cmd(char **args, int count, struct command_line *cmds) {
     int index = 0;
     cmds[index].tokens = &args[0];

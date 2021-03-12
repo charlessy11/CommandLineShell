@@ -24,6 +24,13 @@ void execute_pipeline(struct command_line *cmds);
 
 void setup_cmd(char **args, int count, struct command_line *cmds);
 
-struct command_line;
+/**
+* Command line struct
+*/
+struct command_line {
+    char **tokens;
+    bool stdout_pipe; //determine when you've reached the last command in the pipeline
+    char *stdout_file; //decide whether the final result gets written to a file or the terminal
+};
 
 #endif
