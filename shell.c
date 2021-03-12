@@ -191,23 +191,29 @@ void add_job(const char *cmd)
  */
 int print_jobs()
 {   
-    int i = job_count;
-    if (counter * max_jobs > 0) {
-        while (i != max_jobs) {
-            printf("%s\n", job_list[i].job);
-        }
-        ++i;
-    }
-    int j = 0;
-    while (j != job_count) {
-        printf("%s\n", job_list[i].job);
-        ++j;
-    }
-    // int i;
-    // for (i = 0; i < max_jobs; i++) {
-    //     if () //if pid == 0 then dont print
-    //         //else print jobs
+    // int i = job_count;
+    // if (counter * max_jobs > 0) {
+    //     while (i != max_jobs) {
+    //         printf("%s\n", job_list[i].job);
+    //     }
+    //     ++i;
     // }
+    // int j = 0;
+    // while (j != job_count) {
+    //     printf("%s\n", job_list[i].job);
+    //     ++j;
+    // }
+    pid_t pid = fork();
+    int i;
+    for (i = 0; i < max_jobs; i++) {
+        if (pid == 0) {//if pid == 0 then dont print
+            continue;
+        } 
+        else {
+            printf("%s\n", job_list[i].job);
+            //else print jobs
+        }
+    }
 
 
     fflush(stdout);
@@ -247,14 +253,6 @@ char* substr(char *dest, const char *src, int start, int end)
     *dest = '\0';
     return dest;
 }
-
-struct command_line {
-    char **tokens;
-    bool stdout_pipe; //determine when you've reached the last command in the pipeline
-    char *stdout_file; //decide whether the final result gets written to a file or the terminal
-};
-
-
 
 
 /**
@@ -348,8 +346,20 @@ int main(void)
 
         for (int i = 0; i < tokens; i++) {
             if (args[i] != NULL && strcmp("|", args[i]) == 0) {
-                printf("Pipe found!!");
+                // printf("Pipe found!!");
                 // execute_pipeline(in);
+                struct command_line cmds[_POSIX_ARG_MAX];
+                prepareCmds(args, tokens, cmds);
+
+                pid_t child = fork();
+                if (child == 0) {
+                    execute_pipeline(cmds);
+                } else if (child == -1) {
+                    perror("fork");
+                } else {
+                    int status;
+                    waitpid(child, &status, 0);
+                }
                 args[i] = 0;
                 next_cmd = &args[i + 1];
             }
