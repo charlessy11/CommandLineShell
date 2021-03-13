@@ -34,37 +34,52 @@ void setup_cmd(char **args, int count, struct command_line *cmds) {
             args[i] = 0;
             cmds[index - 1].stdout_file = args[i + 1];
         }
+        else if(strcmp(args[i], "<") == 0){
+            args[i] = 0;
+            cmds[index - 1].stdin_file = args[i + 1];
+        }
     }
 }
 
-void execute_pipeline(struct command_line *cmds)
+int execute_pipeline(struct command_line *cmds)
 {
+    //create a file and set correct permissions
+    // int file_dir = open(cmds->stdout_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+    //check for stdin_file
+    // if (cmds->stdin_file != NULL) {
+    //     //dup2
+    //     dup2(file_dir, STDIN_FILENO);
+    // }
     /* base case */
     if (cmds->stdout_pipe == false) {
         if (cmds->stdout_file == NULL) {
             execvp(*cmds->tokens, cmds->tokens);
-            return;
+            return -1;
         }
         else {
-            //create a file and set correct permissions
+            // //create a file and set correct permissions
             int fd = open(cmds->stdout_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+            // if (cmds->stdin_file != NULL) {
+            //     //dup2
+            //     dup2(fd, STDIN_FILENO);
+            // }
             //redirect stdout stream
             dup2(fd, STDOUT_FILENO);
             execvp(*cmds->tokens, cmds->tokens);
-            return;
+            return -1;
         }
     }    
      /* Creates a pipe. */
     int fd[2]; /* we need 2 fds, one for the read and another for the write end */
     if (pipe(fd) == -1) {
         perror("pipe");
-        return;
+        return -1;
     }
     /* fork a new process */
     pid_t pid = fork();
     if (pid == -1) {
         perror("fork");
-        return;
+        return -1;
     }
     /* check if pid is the child */
     else if (pid == 0) {
@@ -85,5 +100,5 @@ void execute_pipeline(struct command_line *cmds)
         close(fd[1]); //close pipe[1]
         execute_pipeline(++cmds); //move on to the next command in the pipeline
     }
-    // return 0;
+    return 0;
 }

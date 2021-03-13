@@ -418,6 +418,10 @@ int main(void)
             continue;
         } else if (child == 0) {
             execute_pipeline(cmds);
+            // if (execute_pipeline(cmds) == -1) {
+            // //     // return EXIT_FAILURE;
+                
+            // }
             int ret = execvp(cmd_ptr[0], cmd_ptr);
             if (ret == -1) {
                 perror("execvp");
