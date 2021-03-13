@@ -229,13 +229,13 @@ void sigint_handler(int signo)
 void child_handler(int signo) 
 {
     int status;
-    pid_t pid = waitpid(-1, & status, WNOHANG);
+    pid_t pid = waitpid(-1, &status, WNOHANG);
     int i;
-    for(i = 0; i <job_count; i++) {
+    for(i = 0; i < job_count; i++) {
         if(job_list[i].job_num == pid) {
             free(job_list[i].job); 
-            job_list[i].job = NULL; 
             job_list[i].job_num = 0; 
+            job_list[i].job = NULL;
         }
     }
 }
