@@ -17,6 +17,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include <readline/readline.h>
+#include <stddef.h>
 
 #include "history.h"
 #include "logger.h"
@@ -59,18 +61,11 @@ int hist_cmd();
 int handle_builtins(int argc, char *args[]);
 
 /**
-* Print job list
+* Print jobs
 *
-* @return 0 if successful
+* @returns 0 if successful and -1 if otherwise
 */
-int print_jobs();
-
-/**
-* Add job
-*
-* @param cmd
-*/
-void add_job(const char *cmd);
+int job_cmd();
 
 
 /**
@@ -88,7 +83,7 @@ struct built_in builtin_cmd[] = {
     {"cd", cd_cmd},
     {"exit", exit_cmd},
     {"history", hist_cmd},
-    {"jobs", print_jobs}
+    {"jobs", job_cmd}
 };
 
 /**
@@ -142,7 +137,8 @@ int hist_cmd() {
 */
 int handle_builtins(int argc, char *args[]) {
     int i = 0;
-    while (i != sizeof(builtin_cmd) / sizeof(struct built_in)) {
+    int size = sizeof(builtin_cmd) / sizeof(struct built_in);
+    while (i != size) {
         if (strcmp(args[0], builtin_cmd[i].user) == 0) {
             return builtin_cmd[i].func(argc, args);
         }
@@ -153,70 +149,57 @@ int handle_builtins(int argc, char *args[]) {
 }
 
 /**
- * Job entry struct
- */
+* job entry struct
+*/ 
 struct job_entry
 {
-    int job_num;
-    char job[100];
-};
+    int job_num; 
+    char *job;
+}; 
 
 /**
- * List of job entries
- */
-struct job_entry job_list[10];
+* list of jobs 
+*/ 
+struct job_entry *job_list; 
 
-static int job_count = 0;
-static int counter = 0;
-static int max_jobs = 10;
+static int job_count = 0; 
 
 /**
- * Add jobs
- *
- * @param cmd the command to be addes
+ * initializes job list   
  */
-void add_job(const char *cmd)
+void job_init(void)
 {
-    if (job_count >= max_jobs) {
-        counter++;
-        job_count = 0;
-    }
-    strcpy(job_list[job_count].job, cmd);
-    job_list[job_count].job_num = job_count;
-    job_count++;
+    job_list = calloc(10, sizeof(struct job_entry)); //10 is the max jobs
 }
 
 /**
- * Print jobs
+ * adds the job to the jobs list and also adds the job name and the job pid
  */
-int print_jobs()
-{   
-    // int i = job_count;
-    // if (counter * max_jobs > 0) {
-    //     while (i != max_jobs) {
-    //         printf("%s\n", job_list[i].job);
-    //     }
-    //     ++i;
-    // }
-    // int j = 0;
-    // while (j != job_count) {
-    //     printf("%s\n", job_list[i].job);
-    //     ++j;
-    // }
-    pid_t pid = fork();
+void add_job(char *cmd, int pid) 
+{ 
+    int len = strlen(cmd);
+    if(job_list[job_count % 10].job == NULL){
+        job_list[job_count].job = calloc(len, sizeof(char) + 1); 
+    } else {
+        job_list[job_count % 10].job = realloc(job_list[job_count % 10].job, sizeof(char) * len + 1); 
+    }
+    strcpy(job_list[job_count].job, cmd); 
+    job_list[job_count].job_num = pid; 
+    job_count++; 
+}
+
+/**
+ * prints out all the items in the history list 
+ */
+int job_cmd()
+{
     int i;
-    for (i = 0; i < max_jobs; i++) {
-        if (pid == 0) {//if pid == 0 then dont print
-            continue;
-        } 
-        else {
-            printf("%s\n", job_list[i].job);
-            //else print jobs
+    for(i = 0; i < job_count; i++){
+        if(job_list[i].job != NULL) {
+            printf("%s\n",  job_list[i].job);
         }
     }
-
-
-    fflush(stdout);
+    fflush(stdout);   
     return 0;
 }
 
@@ -226,10 +209,35 @@ int print_jobs()
 * @param signo the signal number
 *
 */
-void sigint_handler(int signo) {
-    signal(signo, SIG_IGN);
-    fflush(stdout);
-    printf("\n");
+void sigint_handler(int signo) 
+{
+    if (isatty(STDIN_FILENO)) {
+        printf("\n");
+        puts(prompt_line());
+        rl_on_new_line();
+        rl_replace_line("", 1);
+        rl_redisplay();
+
+        fflush(stdout); 
+    }
+}
+
+/**
+ * signal for if the background job has completed to remove it from the list 
+ * @param signo 
+ */
+void child_handler(int signo) 
+{
+    int status;
+    pid_t pid = waitpid(-1, & status, WNOHANG);
+    int i;
+    for(i = 0; i <job_count; i++) {
+        if(job_list[i].job_num == pid) {
+            free(job_list[i].job); 
+            job_list[i].job = NULL; 
+            job_list[i].job_num = 0; 
+        }
+    }
 }
 
 /**
@@ -261,9 +269,11 @@ char* substr(char *dest, const char *src, int start, int end)
 */
 int main(void)
 {
-    init_ui();
     signal(SIGINT, sigint_handler); 
+    signal(SIGCHLD, child_handler);
+    init_ui(); 
     hist_init(100);
+    job_init();
 
     char *command;
     while (true) {
@@ -274,7 +284,7 @@ int main(void)
             break;
         }
 
-        char in[1000];
+        char in[100];
         strcpy(in, command);
 
         LOG("Input command: %s\n", command);
@@ -283,6 +293,7 @@ int main(void)
         int tokens = 0;
         char *next_tok = command;
         char *curr_tok;
+        char *temp = strndup(command, strlen(command));
 
         bool is_hist = false;
 
@@ -290,7 +301,7 @@ int main(void)
             if (command[1] == '!') { //checks if double bang
                 char *entry = hist_search_cnum(hist_last_cnum());
                 if (entry == NULL) {
-                    continue;
+                    goto cleanup;
                 }
                 strcpy(next_tok, entry);
                 hist_add(hist_search_cnum(hist_last_cnum()));
@@ -302,7 +313,7 @@ int main(void)
                 if (num == 0) {
                     char *entry = hist_search_prefix(prefix);
                     if (entry == NULL) {
-                        continue;
+                        goto cleanup;
                     }
                     strcpy(next_tok, entry);
                     hist_add(entry);
@@ -311,7 +322,7 @@ int main(void)
                 else { //checks if single bang
                     char *cmd = hist_search_cnum(num);
                     if (cmd == NULL) {
-                        continue;
+                        goto cleanup;
                     }
                     strcpy(next_tok, cmd);
                     hist_add(hist_search_cnum(num));
@@ -324,13 +335,10 @@ int main(void)
         }
 
         bool is_job = false;
-        if (*(command + strlen(command) - 1) == '&')
-        {
-            add_job(in); 
+        if (*(command + strlen(command) - 1) == '&') {
             *(command + strlen(command) - 1) = '\0';
             is_job = true;   
         }
-
 
         sum_count();
 
@@ -345,83 +353,25 @@ int main(void)
         args[tokens] = (char *) NULL;
         //checks if user didn't input a command
         if (args[0] == NULL) {
-            continue;
+            goto cleanup;
         }
 
         char **cmd_ptr = args;
-        // char **next_cmd = NULL;
-        // bool is_job = false;
-
-        // for (int i = 0; i < tokens; i++) {
-            // if (args[i] != NULL && strcmp("|", args[i]) == 0) {
-                // struct command_line cmds[_POSIX_ARG_MAX];
-                // setup_cmd(args, tokens, cmds);
-
-                // pid_t child = fork();
-                // if (child == 0) {
-                //     execute_pipeline(cmds);
-                // } else if (child == -1) {
-                //     perror("fork");
-                // } else {
-                //     int status;
-                //     waitpid(child, &status, 0);
-                // }
-            //     args[i] = 0;
-            //     next_cmd = &args[i + 1];
-            // }
-            // if (args[i] != NULL && strcmp("&", args[i]) == 0) {
-            //     add_job(in); 
-            //     args[i] = 0;
-            //     is_job = true; 
-            // }
-        // }
 
         int result = handle_builtins(tokens, args);
-        if (result == 0)
-        {
-            continue;
+        if (result == 0) {
+            goto cleanup;
         }
 
-        // pid_t child = fork();
-        // if (child == -1) {
-        //     perror("fork");
-        //     continue;
-        // } 
-        // else if (child == 0) {
-        //     /* We are the child process */
-        //     int ret = execvp(cmd_ptr[0], cmd_ptr);
-        //     if (ret == -1) {
-        //         perror("execvp");
-        //         close(fileno(stdin));
-        //         close(fileno(stdout));
-        //         close(fileno(stderr));
-        //         return EXIT_FAILURE;
-        //     }
-        // } 
-        // else {
-        //     /* We are the parent process */
-        //     if (is_job == false) {
-        //         int status = 0;
-        //         waitpid(child, &status, 0);
-        //         LOG("Status: %d", status);
-        //         set_result(status);
-        //     } else {
-        //         //add the PID to our job list
-        //     }
-        // }
         struct command_line cmds[_POSIX_ARG_MAX];
         setup_cmd(args, tokens, cmds);
 
         pid_t child = fork();
         if (child == -1) {
             perror("fork");
-            continue;
+            goto cleanup;
         } else if (child == 0) {
             execute_pipeline(cmds);
-            // if (execute_pipeline(cmds) == -1) {
-            // //     // return EXIT_FAILURE;
-                
-            // }
             int ret = execvp(cmd_ptr[0], cmd_ptr);
             if (ret == -1) {
                 perror("execvp");
@@ -438,9 +388,14 @@ int main(void)
                 set_result(status);
             } else {
                 //add the PID to our job list
+                int pid = child;
+                add_job(temp, pid); 
             }
         }
+cleanup:        
+        free(temp);
     }
     hist_destroy();
+    free(job_list);
     return 0;
 }

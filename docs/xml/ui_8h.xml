@@ -80,7 +80,7 @@ Tell readline that if we don&apos;t find a suitable completion, it should fall b
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="18" column="6" bodyfile="ui.c" bodystart="178" bodyend="183" declfile="ui.h" declline="18" declcolumn="6"/>
+        <location file="ui.h" line="18" column="6" bodyfile="ui.c" bodystart="173" bodyend="178" declfile="ui.h" declline="18" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a389022a6c7bfb51f750434f0378a0790" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>char *</type>
@@ -120,7 +120,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="26" column="6" bodyfile="ui.c" bodystart="190" bodyend="199" declfile="ui.h" declline="26" declcolumn="6"/>
+        <location file="ui.h" line="26" column="6" bodyfile="ui.c" bodystart="185" bodyend="194" declfile="ui.h" declline="26" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a2c48080cb120e8745971d8c44f0e010f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -137,7 +137,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="31" column="6" bodyfile="ui.c" bodystart="54" bodyend="74" declfile="ui.h" declline="31" declcolumn="6"/>
+        <location file="ui.h" line="31" column="6" bodyfile="ui.c" bodystart="53" bodyend="73" declfile="ui.h" declline="31" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a830f1692d60868f535069cc6b056ac65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -179,7 +179,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="41" column="5" bodyfile="ui.c" bodystart="142" bodyend="156" declfile="ui.h" declline="41" declcolumn="5"/>
+        <location file="ui.h" line="41" column="5" bodyfile="ui.c" bodystart="141" bodyend="153" declfile="ui.h" declline="41" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a8c4f03db9a6667ea25d924877be90734" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -221,7 +221,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="49" column="5" bodyfile="ui.c" bodystart="158" bodyend="172" declfile="ui.h" declline="49" declcolumn="5"/>
+        <location file="ui.h" line="49" column="5" bodyfile="ui.c" bodystart="155" bodyend="167" declfile="ui.h" declline="49" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1af9923f629a28db12e67bb34c7d68fb36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>char *</type>
@@ -241,7 +241,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="56" column="6" bodyfile="ui.c" bodystart="76" bodyend="113" declfile="ui.h" declline="56" declcolumn="6"/>
+        <location file="ui.h" line="56" column="6" bodyfile="ui.c" bodystart="75" bodyend="112" declfile="ui.h" declline="56" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a5f1b7595f2672ad9842f962ff050183d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>char *</type>
@@ -261,7 +261,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="63" column="6" bodyfile="ui.c" bodystart="115" bodyend="130" declfile="ui.h" declline="63" declcolumn="6"/>
+        <location file="ui.h" line="63" column="6" bodyfile="ui.c" bodystart="114" bodyend="129" declfile="ui.h" declline="63" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a9270d80520077680951d5d67f8cd380f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -278,7 +278,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="70" column="5" bodyfile="ui.c" bodystart="39" bodyend="42" declfile="ui.h" declline="70" declcolumn="5"/>
+        <location file="ui.h" line="70" column="5" bodyfile="ui.c" bodystart="38" bodyend="41" declfile="ui.h" declline="70" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1a39cb955fd96b253bfd4efdf5ee4ec0e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -292,7 +292,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="75" column="6" bodyfile="ui.c" bodystart="44" bodyend="47" declfile="ui.h" declline="75" declcolumn="6"/>
+        <location file="ui.h" line="75" column="6" bodyfile="ui.c" bodystart="43" bodyend="46" declfile="ui.h" declline="75" declcolumn="6"/>
       </memberdef>
       <memberdef kind="function" id="ui_8h_1ab463e7280ec827c3bc4eb05c74436b22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -320,7 +320,7 @@ This function is called repeatedly by the readline library to build a list of po
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="ui.h" line="82" column="6" bodyfile="ui.c" bodystart="49" bodyend="52" declfile="ui.h" declline="82" declcolumn="6"/>
+        <location file="ui.h" line="82" column="6" bodyfile="ui.c" bodystart="48" bodyend="51" declfile="ui.h" declline="82" declcolumn="6"/>
       </memberdef>
       </sectiondef>
     <briefdescription>

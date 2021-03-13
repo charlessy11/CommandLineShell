@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['key_5fdown_77',['key_down',['../ui_8c.html#a8c4f03db9a6667ea25d924877be90734',1,'key_down(int count, int key):&#160;ui.c'],['../ui_8h.html#a8c4f03db9a6667ea25d924877be90734',1,'key_down(int count, int key):&#160;ui.c']]],
-  ['key_5fup_78',['key_up',['../ui_8c.html#a830f1692d60868f535069cc6b056ac65',1,'key_up(int count, int key):&#160;ui.c'],['../ui_8h.html#a830f1692d60868f535069cc6b056ac65',1,'key_up(int count, int key):&#160;ui.c']]]
+  ['job_5fcmd_85',['job_cmd',['../shell_8c.html#a8f2573719d237ad93da3ac92bcebee0f',1,'shell.c']]],
+  ['job_5finit_86',['job_init',['../shell_8c.html#a921c0212672588b469066bd9362bb491',1,'shell.c']]]
 ];

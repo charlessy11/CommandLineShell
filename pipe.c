@@ -14,9 +14,8 @@
 
 #include "pipe.h"
 
-// int pipeline_status = 0;
-
-void setup_cmd(char **args, int count, struct command_line *cmds) {
+void setup_cmd(char **args, int count, struct command_line *cmds) 
+{
     int index = 0;
     cmds[index].tokens = &args[0];
     cmds[index].stdout_pipe = false;
@@ -38,18 +37,15 @@ void setup_cmd(char **args, int count, struct command_line *cmds) {
             args[i] = 0;
             cmds[index - 1].stdin_file = args[i + 1];
         }
+        else if(strcmp(args[i], ">>") == 0){
+            args[i] = 0;
+            cmds[index - 1].stdout_file = args[i + 1];
+        }
     }
 }
 
 int execute_pipeline(struct command_line *cmds)
 {
-    //create a file and set correct permissions
-    // int file_dir = open(cmds->stdout_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-    //check for stdin_file
-    // if (cmds->stdin_file != NULL) {
-    //     //dup2
-    //     dup2(file_dir, STDIN_FILENO);
-    // }
     /* base case */
     if (cmds->stdout_pipe == false) {
         if (cmds->stdout_file == NULL) {
@@ -59,10 +55,6 @@ int execute_pipeline(struct command_line *cmds)
         else {
             // //create a file and set correct permissions
             int fd = open(cmds->stdout_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-            // if (cmds->stdin_file != NULL) {
-            //     //dup2
-            //     dup2(fd, STDIN_FILENO);
-            // }
             //redirect stdout stream
             dup2(fd, STDOUT_FILENO);
             execvp(*cmds->tokens, cmds->tokens);

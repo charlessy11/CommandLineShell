@@ -2,6 +2,7 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
   <compounddef id="structcommand__line" kind="struct" language="C++" prot="public">
     <compoundname>command_line</compoundname>
+    <includes refid="pipe_8h" local="no">pipe.h</includes>
       <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="structcommand__line_1a52e5481c7442ec614f2cf19c281668e3" prot="public" static="no" mutable="no">
         <type>char **</type>
@@ -14,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="pipe.c" line="27" column="10" bodyfile="pipe.c" bodystart="27" bodyend="-1"/>
+        <location file="pipe.h" line="16" column="10" bodyfile="pipe.h" bodystart="16" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structcommand__line_1ac35a3b63e08d29c8c1b0673eb9709f90" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -27,7 +28,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="pipe.c" line="28" column="10" bodyfile="pipe.c" bodystart="28" bodyend="-1"/>
+        <location file="pipe.h" line="17" column="10" bodyfile="pipe.h" bodystart="17" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structcommand__line_1a88de722aec2e9fdc3555d1392dda7533" prot="public" static="no" mutable="no">
         <type>char *</type>
@@ -40,7 +41,20 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="pipe.c" line="29" column="10" bodyfile="pipe.c" bodystart="29" bodyend="-1"/>
+        <location file="pipe.h" line="18" column="10" bodyfile="pipe.h" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structcommand__line_1a40e5601be90e534ff83fa78aa111bcb1" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* command_line::stdin_file</definition>
+        <argsstring></argsstring>
+        <name>stdin_file</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="pipe.h" line="19" column="10" bodyfile="pipe.h" bodystart="19" bodyend="-1"/>
       </memberdef>
       </sectiondef>
     <briefdescription>
@@ -48,8 +62,9 @@
     <detaileddescription>
 <para>Command line struct </para>
     </detaileddescription>
-    <location file="pipe.c" line="26" column="1" bodyfile="pipe.c" bodystart="26" bodyend="30"/>
+    <location file="pipe.h" line="15" column="1" bodyfile="pipe.h" bodystart="15" bodyend="20"/>
     <listofallmembers>
+      <member refid="structcommand__line_1a40e5601be90e534ff83fa78aa111bcb1" prot="public" virt="non-virtual"><scope>command_line</scope><name>stdin_file</name></member>
       <member refid="structcommand__line_1a88de722aec2e9fdc3555d1392dda7533" prot="public" virt="non-virtual"><scope>command_line</scope><name>stdout_file</name></member>
       <member refid="structcommand__line_1ac35a3b63e08d29c8c1b0673eb9709f90" prot="public" virt="non-virtual"><scope>command_line</scope><name>stdout_pipe</name></member>
       <member refid="structcommand__line_1a52e5481c7442ec614f2cf19c281668e3" prot="public" virt="non-virtual"><scope>command_line</scope><name>tokens</name></member>

@@ -8,6 +8,7 @@
     <member refid="structcommand__line_1a52e5481c7442ec614f2cf19c281668e3" kind="variable"><name>tokens</name></member>
     <member refid="structcommand__line_1ac35a3b63e08d29c8c1b0673eb9709f90" kind="variable"><name>stdout_pipe</name></member>
     <member refid="structcommand__line_1a88de722aec2e9fdc3555d1392dda7533" kind="variable"><name>stdout_file</name></member>
+    <member refid="structcommand__line_1a40e5601be90e534ff83fa78aa111bcb1" kind="variable"><name>stdin_file</name></member>
   </compound>
   <compound refid="structhist__entry" kind="struct"><name>hist_entry</name>
     <member refid="structhist__entry_1ae9bb1ee4b95e67b2b5630075b0b4bf25" kind="variable"><name>cmd_num</name></member>
@@ -15,7 +16,7 @@
   </compound>
   <compound refid="structjob__entry" kind="struct"><name>job_entry</name>
     <member refid="structjob__entry_1aa1ad82b9332c6aca9c20f7127c4559a1" kind="variable"><name>job_num</name></member>
-    <member refid="structjob__entry_1a6187b42f2b8bef3597aa5ce74c7dcac1" kind="variable"><name>job</name></member>
+    <member refid="structjob__entry_1a695916525f1fe3cc1c6304ee2640925c" kind="variable"><name>job</name></member>
   </compound>
   <compound refid="history_8c" kind="file"><name>history.c</name>
     <member refid="history_8c_1a7b2ed31b74cd7d9fa6dc10fe9b5cf336" kind="variable"><name>hist_list</name></member>
@@ -49,32 +50,28 @@
     <member refid="logger_8h_1a388edf12256bf73c3a8ee9734c3bd841" kind="define"><name>LOG</name></member>
   </compound>
   <compound refid="pipe_8c" kind="file"><name>pipe.c</name>
-    <member refid="pipe_8c_1a5d8934088c443725aca4357d846b5741" kind="variable"><name>statusCode</name></member>
-    <member refid="pipe_8c_1adcad5c4575f31370cebe2ef7121db3ec" kind="variable"><name>interactive</name></member>
-    <member refid="pipe_8c_1a9a58cf874769e6345e9a72a0ef9cb2e0" kind="variable"><name>numCommands</name></member>
-    <member refid="pipe_8c_1a9147d2ee24a1b9d7acb265debfb34c85" kind="variable"><name>executing</name></member>
-    <member refid="pipe_8c_1ac1d8b3080c5dba5d16e5a8e85947a16d" kind="function"><name>create_commands</name></member>
-    <member refid="pipe_8c_1a712bd76a3e60d5378b852d36f3876cf4" kind="function"><name>free_commands</name></member>
-    <member refid="pipe_8c_1aad78d310b783a819533a1fd93b687ec7" kind="function"><name>tokenize</name></member>
-    <member refid="pipe_8c_1a2aa1c4d6ebe65030391ec3c6bb4a11e2" kind="function"><name>execute_pipeline</name></member>
+    <member refid="pipe_8c_1afa727adbeec67b995a9a7d64a0a41952" kind="function"><name>setup_cmd</name></member>
+    <member refid="pipe_8c_1a87e44c52acc833dca6d5ebf489fe286e" kind="function"><name>execute_pipeline</name></member>
   </compound>
   <compound refid="pipe_8h" kind="file"><name>pipe.h</name>
+    <member refid="pipe_8h_1a87e44c52acc833dca6d5ebf489fe286e" kind="function"><name>execute_pipeline</name></member>
+    <member refid="pipe_8h_1afa727adbeec67b995a9a7d64a0a41952" kind="function"><name>setup_cmd</name></member>
   </compound>
   <compound refid="README_8md" kind="file"><name>README.md</name>
   </compound>
   <compound refid="shell_8c" kind="file"><name>shell.c</name>
     <member refid="shell_8c_1af7fff1df3926122e1744581450907049" kind="variable"><name>builtin_cmd</name></member>
-    <member refid="shell_8c_1a74b7235a06ead7bbe50a849b32c41969" kind="variable"><name>job_list</name></member>
+    <member refid="shell_8c_1a4cd7992c5e07b55efe9371a84ab5906e" kind="variable"><name>job_list</name></member>
     <member refid="shell_8c_1adced14fcf3ab49e9fce398ada0764adc" kind="variable"><name>job_count</name></member>
-    <member refid="shell_8c_1a617a47c70795bcff659815ad0efd2266" kind="variable"><name>counter</name></member>
-    <member refid="shell_8c_1a7a765a796cc50c4ff9299fea612c3b2d" kind="variable"><name>max_jobs</name></member>
     <member refid="shell_8c_1aff7038fb25ce5c574665c25f99f98450" kind="function"><name>cd_cmd</name></member>
     <member refid="shell_8c_1af7eac76b32b0e9587cab2c2a402e6fc7" kind="function"><name>exit_cmd</name></member>
     <member refid="shell_8c_1a3da5424abb397d3ccbd096bceb957ca5" kind="function"><name>hist_cmd</name></member>
     <member refid="shell_8c_1acc95f71e732c918f307bcf161a70f0a1" kind="function"><name>handle_builtins</name></member>
-    <member refid="shell_8c_1a7d146daa7be17ec5536926cab08d3473" kind="function"><name>print_jobs</name></member>
-    <member refid="shell_8c_1a7129b49f2ed57e8b40e3e2abe52d8e19" kind="function"><name>add_job</name></member>
+    <member refid="shell_8c_1a8f2573719d237ad93da3ac92bcebee0f" kind="function"><name>job_cmd</name></member>
+    <member refid="shell_8c_1a921c0212672588b469066bd9362bb491" kind="function"><name>job_init</name></member>
+    <member refid="shell_8c_1a708091b5b454c81457df650944d010a6" kind="function"><name>add_job</name></member>
     <member refid="shell_8c_1a4b515337891f74ebd79cb307db16bf33" kind="function"><name>sigint_handler</name></member>
+    <member refid="shell_8c_1afa512f6a0638771e86f01e2b170a6972" kind="function"><name>child_handler</name></member>
     <member refid="shell_8c_1ad579e708592379a54043046a669dd7f1" kind="function"><name>substr</name></member>
     <member refid="shell_8c_1a840291bc02cba5474a4cb46a9b9566fe" kind="function"><name>main</name></member>
   </compound>

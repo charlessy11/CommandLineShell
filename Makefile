@@ -2,7 +2,7 @@
 bin=jsh
 
 # Set the following to '0' to disable log messages:
-LOGGER ?= 1
+LOGGER ?= 0
 
 # Compiler/linker flags
 CFLAGS += -g -Wall -fPIC -DLOGGER=$(LOGGER)
@@ -25,7 +25,6 @@ history.o: history.c history.h logger.h
 ui.o: ui.h ui.c logger.h history.h
 util.o: util.c util.h logger.h
 pipe.o: pipe.c pipe.h
-jobs.o: jobs.c jobs.h
 
 clean:
 	rm -f $(bin) $(obj) libshell.so vgcore.*

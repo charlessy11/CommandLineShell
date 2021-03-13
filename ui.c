@@ -23,7 +23,6 @@
 
 
 static int readline_init(void);
-// static char prompt_str[80] = "--[enter a command]--> ";
 
 static bool scripting = false;
 
@@ -103,7 +102,7 @@ char *prompt_line(void)
     else {
         sprintf(prompt_str, "[%s]-[%d]-[%s@%s:%s]%c ", "INVALID", command_num++, username, hostname, ptr, '$');
     }
-    //HELP!!! if invalid command
+
     LOG("RESULT: %s %s\n",cwd, pws->pw_dir);
     return prompt_str;
 
@@ -150,8 +149,6 @@ int key_up(int count, int key)
     /* Move the cursor to the end of the line: */
     rl_point = rl_end;
 
-    // TODO: reverse history search
-
     return 0;
 }
 
@@ -165,9 +162,7 @@ int key_down(int count, int key)
 
     /* Move the cursor to the end of the line: */
     rl_point = rl_end;
-
-    // TODO: forward history search
-
+    
     return 0;
 }
 

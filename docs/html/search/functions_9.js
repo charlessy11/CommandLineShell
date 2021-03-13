@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['print_5fjobs_81',['print_jobs',['../shell_8c.html#a7d146daa7be17ec5536926cab08d3473',1,'shell.c']]],
-  ['prompt_5fline_82',['prompt_line',['../ui_8c.html#af9923f629a28db12e67bb34c7d68fb36',1,'prompt_line(void):&#160;ui.c'],['../ui_8h.html#af9923f629a28db12e67bb34c7d68fb36',1,'prompt_line(void):&#160;ui.c']]]
+  ['next_5ftoken_90',['next_token',['../util_8c.html#a36cc4e6b1ce708ed7492ae0979b10bf5',1,'next_token(char **str_ptr, const char *delim):&#160;util.c'],['../util_8h.html#a36cc4e6b1ce708ed7492ae0979b10bf5',1,'next_token(char **str_ptr, const char *delim):&#160;util.c']]]
 ];
