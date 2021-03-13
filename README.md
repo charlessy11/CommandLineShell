@@ -6,6 +6,10 @@ See: https://www.cs.usfca.edu/~mmalensek/cs326/assignments/project-2.html
 
 The Command Line Shell (v1.0) is a program that implements a shell. The shell is called `jsh` which is short for "jett's shell". 
 
+**What Is A Shell?**
+
+The outermost layer of the operating system is called the shell. In Unix-based systems, the shell is generally a command line interface.
+
 **How It Works:**
 
 The programs runs an interactive shell with a nice-looking prompt that displays helpful information and validates if the user input is valid or not. In addition to this, `jsh` supports the following: scripting, built-in commands, signal handling, history, background jobs, and pipes.
